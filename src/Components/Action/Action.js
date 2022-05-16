@@ -11,7 +11,7 @@ export default function Action(props) {
             <table className="tableau-style">
                 <thead>
                     <tr>
-                        <th>Nom</th>
+                        <th>Nom de l'action</th>
                         <th>Média</th>
                         <th>Mots clés</th>
                         <th>Url Cible</th>
