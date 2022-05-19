@@ -1,25 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './Action.css';
 
-export default function Action() {
-
-    const [actions, setActions] = useState([])
-
-    useEffect(() => {
-        fetchData();
-    }, [])
-
-    const fetchData = async () => {
-        await fetch('https://squedio.com/marketing/api/v1/actions')
-            .then((response) => response.json())
-            .then((data) => setActions(data))
-            .catch((err) => {
-                console.log(err);
-            })
-    }
-
-// Test de la requête
-// console.log(actions)
+export default function Action(props) {
 
     return (
         <>
@@ -43,7 +25,7 @@ export default function Action() {
                 </thead>
                 <tbody >
                     {
-                        actions.map(({ id, title, media, tags, target_url, shipments, clicks, new_accounts, enrollments, value }) =>
+                        props.actions.map(({id, title, media, tags, target_url, shipments, clicks, new_accounts, enrollments, value }) =>
                             <tr key={id}>
                                 <td>{title}</td>
                                 <td> {media}</td>
@@ -60,7 +42,6 @@ export default function Action() {
                                     <button>delete</button>
                                 </td>
                             </tr>
-
                         )}
                 </tbody>
             </table>

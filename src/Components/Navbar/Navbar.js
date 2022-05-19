@@ -27,7 +27,6 @@ export default function Navbar() {
     }, [])
 
     return (
-
         <div>
             <nav>
                 {(toggleMenu || largeur > 500) && (
