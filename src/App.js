@@ -15,13 +15,8 @@ function App() {
 
 
   // Récupéartion de toues les actions
-<<<<<<< HEAD
   const getUsers = async () => {
-    await fetch('https://jsonplaceholder.typicode.com/users')
-=======
-  const fetchData = async () => {
     await fetch('https://squedio.com/marketing/api/v1/actions')
->>>>>>> old-state
       .then((response) => response.json())
       .then((data) => setActions(data))
       .catch((err) => {
@@ -31,20 +26,15 @@ function App() {
   console.log(actions)
 
   // Ajout d'une action
-  const onAdd = async (id, name, email) => {
-    await fetch('https://jsonplaceholder.typicode.com/users', {
+  const onAdd = async ( title, media,tags,target_url) => {
+    await fetch('https://squedio.com/marketing/api/v1/actions', {
       method: 'POST',
       body: JSON.stringify({
         id: uuidv4(),
-<<<<<<< HEAD
-        name: name,
-        email: email
-=======
         title: title,
         media: media,
         tags: tags,
         target_url: target_url
->>>>>>> old-state
       }),
       headers: {
         "Content-type": "application/json; charset=UTF+8",
@@ -65,53 +55,11 @@ function App() {
       })
   };
 
-<<<<<<< HEAD
-  // Delete
-  const onDelete = async (id) => {
-    await fetch('https://squedio.com/marketing/api/v1/actions/{id}', {
-      method: 'DELETE'
-    })
-      .then((res) => {
-        if (res.status !== 200) {
-          return
-        } else {
-          setActions(actions.filter((actions) => {
-            return actions.id !== id;
-          }))
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  };
-
-  return (
-    <>
-      <Navbar />
-      <AddAction onAdd={onAdd}    
-      actions={actions}
-              setActions={setActions}/>
-      <div>
-        {
-          actions.map((actions, id) => (
-            <Action
-              key={id}
-              actions={actions}
-              setActions={setActions}
-              name={actions.name}
-              email={actions.email}
-
-              onDelete={onDelete} />
-          ))
-        }
-      </div>
-=======
   return (
     <>
       <Navbar />
       <AddAction actions={actions} setActions={setActions} onAdd={onAdd} />
       <Action actions={actions} setActions={setActions} />
->>>>>>> old-state
     </>
   );
 }
