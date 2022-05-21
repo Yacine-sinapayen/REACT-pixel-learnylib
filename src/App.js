@@ -10,12 +10,12 @@ function App() {
   const [actions, setActions] = useState([]);
 
   useEffect(() => {
-    getUsers();
+    getActions();
   }, []);
 
 
   // Récupéartion de toues les actions
-  const getUsers = async () => {
+  const getActions = async () => {
     await fetch('https://squedio.com/marketing/api/v1/actions')
       .then((response) => response.json())
       .then((data) => setActions(data))
@@ -26,7 +26,7 @@ function App() {
   console.log(actions)
 
   // Ajout d'une action
-  const onAdd = async ( title, media,tags,target_url) => {
+  const onAdd = async (title, media, tags, target_url) => {
     await fetch('https://squedio.com/marketing/api/v1/actions', {
       method: 'POST',
       body: JSON.stringify({
@@ -55,11 +55,30 @@ function App() {
       })
   };
 
+  // Supression
+  const onDelete = async (id) => {
+    await fetch('https://squedio.com/marketing/api/v1/actions/{id}', {
+      method: 'DELETE'
+    })
+    .then((res) => {
+      if(res.status !== 200){
+        return 
+      }else {
+        setActions(actions.filter((action) => {
+          return action.id !== id;
+        }))
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
   return (
     <>
       <Navbar />
-      <AddAction actions={actions} setActions={setActions} onAdd={onAdd} />
-      <Action actions={actions} setActions={setActions} />
+      <AddAction onAdd={onAdd} />
+      <Action actions={actions} setActions={setActions} onDelete={onDelete}/>
     </>
   );
 }

@@ -23,7 +23,8 @@ export default function Action(props) {
                 </thead>
                 <tbody >
                     {
-                        props.actions.map(({id, title, media, tags, target_url, shipments, clicks, new_accounts, enrollments, value }) =>
+                        props.actions.map(({id, title, media, tags, target_url, shipments, clicks, new_accounts, enrollments, value}
+                        ) =>
                             <tr key={id}>
                                 <td>{title}</td>
                                 <td> {media}</td>
@@ -37,7 +38,7 @@ export default function Action(props) {
                                 <td>{value}</td>
                                 <td>
                                     <button>edit</button>
-                                    <button>delete</button>
+                                    <button onClick={() => props.onDelete(props.id)}>delete</button>
                                 </td>
                             </tr>
                         )}
