@@ -27,7 +27,6 @@
     table-layout: fixed;
     border-collapse: collapse;
     min-width: 400px;
-    width: 1400px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
     cursor: pointer;
     margin: 100px auto;
@@ -36,11 +35,11 @@
 }
 
 /* Si mon tableau dépasse la largeur de mon écran je rajoute ce style afin de pouvoir appliquer un scroll horizontal */
-/* table{
+table{
     display: block;
     overflow-x: auto;
-    white-space: nowrap;
-} */
+    /* white-space: nowrap; */
+}
 
 
 thead tr {

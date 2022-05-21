@@ -5,8 +5,6 @@ export default function Action(props) {
 
     return (
         <>
-            <h1>Actions</h1>
-            <button>Ajouter une nouvelle action</button>
             <table className="tableau-style">
                 <thead>
                     <tr>

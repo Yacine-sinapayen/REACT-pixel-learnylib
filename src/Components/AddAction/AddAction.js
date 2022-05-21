@@ -12,9 +12,8 @@ const handleOnSubmit = (e) => {
 }
   return (
     <div>
-    <h1>Learnylib actions marketing</h1>
       <form onSubmit={handleOnSubmit}>
-        <h2>Créer une nouvelle action</h2>
+        <h2>Créer une nouvelle action marketing</h2>
         <input placeholder="Nom de l'action" name="title"/>
         <input placeholder="Média" name="media"/>
         <input placeholder="Mot clés" name="tags"/>
