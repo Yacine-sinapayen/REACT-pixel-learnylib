@@ -2,8 +2,8 @@ import Navbar from './Components/Navbar/Navbar';
 import Action from './Components/Action/Action';
 import AddAction from './Components/AddAction/AddAction';
 import React, { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+// import { Routes, Route } from 'react-router-dom';
 
 function App() {
 
@@ -15,8 +15,13 @@ function App() {
 
 
   // Récupéartion de toues les actions
+<<<<<<< HEAD
   const getUsers = async () => {
     await fetch('https://jsonplaceholder.typicode.com/users')
+=======
+  const fetchData = async () => {
+    await fetch('https://squedio.com/marketing/api/v1/actions')
+>>>>>>> old-state
       .then((response) => response.json())
       .then((data) => setActions(data))
       .catch((err) => {
@@ -31,8 +36,15 @@ function App() {
       method: 'POST',
       body: JSON.stringify({
         id: uuidv4(),
+<<<<<<< HEAD
         name: name,
         email: email
+=======
+        title: title,
+        media: media,
+        tags: tags,
+        target_url: target_url
+>>>>>>> old-state
       }),
       headers: {
         "Content-type": "application/json; charset=UTF+8",
@@ -53,6 +65,7 @@ function App() {
       })
   };
 
+<<<<<<< HEAD
   // Delete
   const onDelete = async (id) => {
     await fetch('https://squedio.com/marketing/api/v1/actions/{id}', {
@@ -92,6 +105,13 @@ function App() {
           ))
         }
       </div>
+=======
+  return (
+    <>
+      <Navbar />
+      <AddAction actions={actions} setActions={setActions} onAdd={onAdd} />
+      <Action actions={actions} setActions={setActions} />
+>>>>>>> old-state
     </>
   );
 }
