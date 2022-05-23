@@ -26,11 +26,11 @@ function App() {
   console.log(actions)
 
   // Ajout d'une action
-  const onAdd = async (title, media, tags, target_url) => {
-    await fetch('https://squedio.com/marketing/api/v1/actions', {
+  const CreateAction = async (title, media, tags, target_url) => {
+    await fetch(`https://squedio.com/marketing/api/v1/actions`, {
       method: 'POST',
       body: JSON.stringify({
-        id: uuidv4(),
+        id : uuidv4(),
         title: title,
         media: media,
         tags: tags,
@@ -57,7 +57,8 @@ function App() {
 
   // Supression
   const onDelete = async (id) => {
-    await fetch('https://squedio.com/marketing/api/v1/actions/{id}', {
+    console.log(id)
+    await fetch(`https://squedio.com/marketing/api/v1/actions/${id}`, {
       method: 'DELETE'
     })
     .then((res) => {
@@ -72,12 +73,13 @@ function App() {
     .catch((err) => {
       console.log(err);
     })
+    
   }
 
   return (
     <>
       <Navbar />
-      <AddAction onAdd={onAdd} />
+      <AddAction CreateAction={CreateAction} />
       <Action actions={actions} setActions={setActions} onDelete={onDelete}/>
     </>
   );

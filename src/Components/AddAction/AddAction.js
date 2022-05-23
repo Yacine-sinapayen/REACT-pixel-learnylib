@@ -1,10 +1,10 @@
 import React from 'react';
 
-const AddAction = ({ onAdd }) => {
+const AddAction = ({ CreateAction }) => {
   
 const handleOnSubmit = (e) => {
   e.preventDefault();
-  onAdd( e.target.title.value, e.target.media.value, e.target.tags.value, e.target.target_url.value);
+  CreateAction( e.target.title.value, e.target.media.value, e.target.tags.value, e.target.target_url.value);
   e.target.title.value = '';
   e.target.media.value = '';
   e.target.tags.value = '';
