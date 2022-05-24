@@ -3,6 +3,7 @@ import Action from './Components/Action/Action';
 import AddAction from './Components/AddAction/AddAction';
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import moment from 'moment'
 // import { Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
   console.log(actions)
 
   // Ajout d'une action
-  const CreateAction = async (title, media, tags, target_url) => {
+  const CreateAction = async (title, media, tags, target_url, shipments) => {
     await fetch(`https://squedio.com/marketing/api/v1/actions`, {
       method: 'POST',
       body: JSON.stringify({
@@ -34,7 +35,9 @@ function App() {
         title: title,
         media: media,
         tags: tags,
-        target_url: target_url
+        target_url: target_url,
+        shipments: shipments,
+        created_at: moment().format('YYYY-MM-DD HH:mm:ss'),
       }),
       headers: {
         "Content-type": "application/json; charset=UTF+8",

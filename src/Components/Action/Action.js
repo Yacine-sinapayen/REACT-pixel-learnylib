@@ -38,7 +38,7 @@ export default function Action(props) {
                                 <td>{value}</td>
                                 <td>
                                     <button>edit</button>
-                                    <button onClick={() => props.onDelete(id)}>delete</button>
+                                    <button onClick={onDelete}>delete</button>
                                 </td>
                             </tr>
                         )}
