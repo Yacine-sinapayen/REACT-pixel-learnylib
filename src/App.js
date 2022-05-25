@@ -11,20 +11,18 @@ function App() {
   const [actions, setActions] = useState([]);
 
   useEffect(() => {
-    getActions();
+    getActions()
   }, []);
-
 
   // Récupéartion de toues les actions
   const getActions = async () => {
     await fetch('https://squedio.com/marketing/api/v1/actions')
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((data) => setActions(data))
       .catch((err) => {
         console.log(err);
       })
   };
-  console.log(actions)
 
   // Ajout d'une action
   const CreateAction = async (title, media, tags, target_url, shipments) => {
@@ -59,31 +57,35 @@ function App() {
   };
 
   // Supression
-  const onDelete = async (id) => {
-    console.log(id)
+  const DeleteAction = async (id) => {
+    
+    let copy = [...actions]
+    copy = copy.filter(action => action.id !== id)
+    setActions(copy);
+
     await fetch(`https://squedio.com/marketing/api/v1/actions/${id}`, {
       method: 'DELETE'
     })
     .then((res) => {
-      if(res.status !== 200){
-        return 
-      }else {
-        setActions(actions.filter((action) => {
-          return action.id !== id;
-        }))
-      }
+     console.log(res)
     })
     .catch((err) => {
       console.log(err);
     })
-    
+  }
+
+  const editAction = async (id) => {
+    await fetch(`https://squedio.com/marketing/api/v1/actions/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({ title:''})
+    })  
   }
 
   return (
     <>
       <Navbar />
       <AddAction CreateAction={CreateAction} />
-      <Action actions={actions} setActions={setActions} onDelete={onDelete}/>
+      <Action actions={actions} setActions={setActions} DeleteAction={DeleteAction}/>
     </>
   );
 }
