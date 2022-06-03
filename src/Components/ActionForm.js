@@ -2,22 +2,28 @@ import moment from 'moment';
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 
-
+// action={form} qui contient le contenue de mon formulaire...
+// onSubmit (ligne 34) fait appel à la fonction handleSubmit qui gère à la fois l'ajout et la modification des actions
 const ActionForm = ({ action, onClose, onSubmit }) => {
 
+    // Ici j'instencie mon objet add qui me permet de dire :
+    // add = true donc vide => je créais une nouvelle action
+    // add = false donc plein ... => je modifie une action 
+    
     const add = Object.keys(action).length === 0;
 
-    //actualise les données
+    // Que ce soit un ajout ou une modification la fonction handleSubmit me renvoie une newAction
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Si c'est un ajout, alors l'action est vierge, sinon on repart de l'action passée dans le formulaire
-        let newAction = add ? {} : {...action};
-        // Si c'est un ajout, il faut créer un id et une date de création pour l'objet action
-        if(add){
+       
+        // newAction = l'objet add : si true je suis dans l'ajout d'une action : modification
+        let newAction = add ? {} : { ...action };
+    // Ajout
+        if (add) {
             newAction.id = uuid()
             newAction.created_at = moment().format('YYYY-MM-DD HH:mm:ss')
         }
-        // Lors de la validation on maj les props de l'action, à partir du formulaire
+        // Modification
         ["title", "media", "tags", "target_url", "shipments"]
             .map(k => {
                 newAction[k] = e.target[k].value
@@ -26,7 +32,7 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
         return onSubmit(newAction);
     };
 
-
+    // Le formulaire ci-dessous gère à la fois l'ajout et la modification. 
     return (
         <div>
             <form onSubmit={handleSubmit}>
