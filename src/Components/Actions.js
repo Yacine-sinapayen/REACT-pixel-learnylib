@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import { CreateAction, EditAction, DeleteAction } from "../ActionApi/ActionApi";
+import { CreateAction, EditAction, DeleteAction } from "../api/ActionApi";
 import "./Action.css";
 import ActionForm from "./ActionForm";
-import { DeleteAction, CreateAction, EditAction } from "../api/ActionApi";
-import moment from "moment";
-import { v4 as uuid } from "uuid";
+
 
 const Actions = (props) => {
   const [actions, setActions] = useState([]);
+
   // Cette var correspond aux données que l'on envoies au formulaire
   // Si form = false on masque le formulaire
   // Si form = {} (objet vide) on va créer une nouvelle action
-  // Si form = {objet plein} in va modifier une action
+  // Si form = {objet plein} on va modifier une action
   const [form, setForm] = useState(false);
 
+  // GET
   useEffect(() => {
-    // Récupéartion de toues les actions
+    // Récupération de toutes les actions
     fetch("https://squedio.com/marketing/api/v1/actions")
       .then((res) => res.json())
       .then((data) => setActions(data))
@@ -35,7 +35,6 @@ const Actions = (props) => {
     if (!add) {
       EditAction(newAction);
       copy = copy.filter((a) => a.id !== newAction.id);
-      // ToDo: Gérer l'erreur de modifcation d'une action
     } else {
       CreateAction(newAction).catch((err) => {
         setActions(oldActions);
@@ -56,7 +55,7 @@ const Actions = (props) => {
       <button onClick={() => setForm({})}>Ajouter</button>
 
       {form ? (
-        /* Si l'objet que l'on passe dans action est vide alors ça sera un formulaire d'ajout sinon ça sera un formulaire de modfification */
+        /* Si l'objet que l'on passe dans action={form} est vide alors ça sera un formulaire d'ajout sinon ça sera un formulaire de modfification */
         <ActionForm
           action={form}
           onClose={() => setForm(false)}
@@ -95,8 +94,8 @@ const Actions = (props) => {
                 <td>{a.enrollments}</td>
                 <td>{a.value}</td>
                 <td>
-                  <button>delete</button>
-                  {/* Les données qu'il y a dans setForm correspondent à l'action. */}
+                  <button onClick={() => DeleteAction(a.id)}>delete</button>
+                  {/* Les données qu'il y a dans setForm(a) correspondent à l'action. */}
                   <button onClick={() => setForm(a)}>edit</button>
                 </td>
               </tr>

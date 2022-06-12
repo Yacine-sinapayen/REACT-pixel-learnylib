@@ -2,16 +2,17 @@ import moment from "moment";
 import React from "react";
 import { v4 as uuid } from "uuid";
 
-// action={form} qui contient le contenue de mon formulaire...
-// onSubmit (ligne 34) fait appel à la fonction handleSubmit qui gère à la fois l'ajout et la modification des actions
+// action={form} contient le contenue de mon formulaire...
+// onSubmit (ligne 34) fait appel à la fonction handleSubmit qui gère à la fois POST et PUT
 const ActionForm = ({ action, onClose, onSubmit }) => {
-  // Cette var permet de savoir si nous sommes dans le cas d'un ajout une d'une modification.
+
+  // Cette const permet de savoir si nous sommes dans le cas d'un ajout une d'une modification.
   // Si l'action passée au formulaire est vide, alors on est dans le cas d'un ajout
   // Si l'action passée au formulaire a déjà des propriétés, alors on est dans le cas d'une modification
-  // Objet.keys().length renvoie le nombre de propriétés de l'objet. Elle renvoie la longueur du tableau. Si est vide, c'est qu'il n'y a pas de propriétés et donc que l'objet est vide.
+  // Objet.keys().length renvoie le nombre de propriétés de l'objet. Elle renvoie la longueur du tableau. S'il est vide, c'est qu'il n'y a pas de propriétés et donc que l'objet est vide.
   const add = Object.keys(action).length === 0;
 
-  //Gère l'ajout et la modification d'une action après validation du formulaire.
+  // Gère le POST et le PUT d'une action après validation du formulaire.
   const handleSubmit = (e) => {
     e.preventDefault();
     // Si on est en mode ajout, on intencie un nouvelle objet vierge
@@ -25,7 +26,7 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
       newAction.created_at = moment().format("YYYY-MM-DD HH:mm:ss");
     }
 
-    // Dans tous les cas (ajout et modification), on actualise les données de l'action à partir du formulaire (saisie de l'utilisateur)
+    // Dans tous les cas (ajout ou modification), on actualise les données de l'action à partir du formulaire (saisie de l'utilisateur)
     ["title", "media", "tags", "target_url", "shipments"].map((k) => {
       newAction[k] = e.target[k].value;
       return true;
