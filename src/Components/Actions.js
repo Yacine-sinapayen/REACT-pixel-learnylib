@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CreateAction, EditAction, DeleteAction } from "../ActionApi/ActionApi";
 import "./Action.css";
 import ActionForm from "./ActionForm";
 import { DeleteAction, CreateAction, EditAction } from "../api/ActionApi";
@@ -7,12 +8,14 @@ import { v4 as uuid } from "uuid";
 
 const Actions = (props) => {
   const [actions, setActions] = useState([]);
+  // Cette var correspond aux données que l'on envoies au formulaire
+  // Si form = false on masque le formulaire
+  // Si form = {} (objet vide) on va créer une nouvelle action
+  // Si form = {objet plein} in va modifier une action
   const [form, setForm] = useState(false);
 
-  //GET :  Récupéartion de toutes les actions
-  // Ça n'est plus une bonne pratqiue de fetch dans un useEffect
-  // Il faudrait utiliser react query par exemple. Ça permet d'executer des fontionc async dans du code react
   useEffect(() => {
+    // Récupéartion de toues les actions
     fetch("https://squedio.com/marketing/api/v1/actions")
       .then((res) => res.json())
       .then((data) => setActions(data))
@@ -21,61 +24,39 @@ const Actions = (props) => {
       });
   }, []);
 
-  // Met à jour la table
-  const handleSubmit = async (newAction, shouldAdd) => {
-    // console.log(shouldAdd);
-    // console.log(form);
-    // let copy = [...actions];
+  //PUT
+  const handleSubmit = (newAction) => {
+    // On verifie si on est en mode ajout ou modification
+    const add = Object.keys(form).length === 0;
+    const oldActions = [...actions];
+    let copy = [...actions];
 
-    if (shouldAdd) {
-      CreateAction({
-        ...newAction,
-        id: uuid(),
-        created_at: moment().format("YYYY-MM-DD HH:mm:ss"),
-      }).then((createdAction) =>
-        setActions((currentActions) => [...currentActions, createdAction])
-      );
-      // équivaut à :
-      // const createdAction = await CreateAction({
-      //   ...newAction,
-      //   id: uuid(),
-      //   created_at: moment().format("YYYY-MM-DD HH:mm:ss"),
-      // });
-      //   if (createdAction) {
-      // currentActions est un params qui est = à la version la plyus à jours de actions.
-      // En passant une fonction à mon setActions il v aprendre la valeur la valeur la plus récente d'Actions, ça évite une valeur pas à jour d'Action.
-      //  équivaut à fait un copy.
-      //  on passe à setAction une fonction à utiliser sur la valeur la plus à jour du state #faellebigboss
-      //     setActions((currentActions) => [...currentActions, createdAction]);
-      //   }
-      // TODO: gestion d'erreurs
+    // Si on est dans le cas d'une modification, on retire l'ancienne version de l'action du tableau.
+    if (!add) {
+      EditAction(newAction);
+      copy = copy.filter((a) => a.id !== newAction.id);
+      // ToDo: Gérer l'erreur de modifcation d'une action
     } else {
-      // J'attends la valeur de retour action
-      const updatedAction = await EditAction(newAction);
-      if (updatedAction) {
-        setActions((currentActions) =>
-          currentActions.map((action) => {
-            // On va seulement modifier un élement dans notre map. Ça me renvoi un new array avec l'élément qui a étét modifié.
-            if (action.id === updatedAction.id) {
-              action.title = updatedAction.title;
-              action.media = updatedAction.media;
-              action.tags = updatedAction.tags;
-              action.target_url = updatedAction.target_url;
-              action.shipments = updatedAction.shipments;
-            }
-            return action;
-          })
-        );
-      }
+      CreateAction(newAction).catch((err) => {
+        setActions(oldActions);
+        alert("Erreur lors de la création de l'action");
+        // TODO Faire un toast (à la place du alert) petit msg d'erreur qui apparait en bas de l'écran et qui disparaît après un certain temps. 
+      });
     }
+    copy.push(newAction);
+    setActions(copy);
+
+    // Pour masquer le formulaire on passe les données du formulaire à false
     return setForm(false);
   };
 
   return (
     <>
+      {/* L'objet de setForm correspond aux données que l'on envoies au formulaire */}
       <button onClick={() => setForm({})}>Ajouter</button>
 
       {form ? (
+        /* Si l'objet que l'on passe dans action est vide alors ça sera un formulaire d'ajout sinon ça sera un formulaire de modfification */
         <ActionForm
           action={form}
           onClose={() => setForm(false)}
@@ -114,7 +95,8 @@ const Actions = (props) => {
                 <td>{a.enrollments}</td>
                 <td>{a.value}</td>
                 <td>
-                  <button onClick={() => DeleteAction(a.id)}>delete</button>
+                  <button>delete</button>
+                  {/* Les données qu'il y a dans setForm correspondent à l'action. */}
                   <button onClick={() => setForm(a)}>edit</button>
                 </td>
               </tr>
