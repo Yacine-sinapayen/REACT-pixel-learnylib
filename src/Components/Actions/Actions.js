@@ -17,11 +17,11 @@ const Actions = () => {
   const [form, setForm] = useState(false);
 
   // Gestion des erreurs de l'API
-  const createError = () =>
+  const displayCreateError = () =>
     toast.error("Erreur lors de la création de l'action");
-  const editError = () =>
+  const diplayEditError = () =>
     toast.error("Erreur lors de la modification de l'action");
-  const deleteError = () =>
+  const displayDeleteError = () =>
     toast.error("Erreur lors de la suppression de l'action");
 
   // GET
@@ -52,7 +52,7 @@ const Actions = () => {
       copy = copy.filter((a) => a.id !== newAction.id);
       EditAction(newAction).catch((err) => {
         // Gestion de l'erreur en édition
-        editError();
+        diplayEditError();
       });
     } else {
       CreateAction(newAction).catch((err) => {
@@ -60,7 +60,7 @@ const Actions = () => {
         // des anciennes action + la nouvelle action.
         setActions(oldActions);
         // Gestion de l'erreur en création
-        createError();
+        displayCreateError();
       });
     }
     copy.push(newAction);
@@ -68,6 +68,29 @@ const Actions = () => {
 
     // Pour masquer le formulaire on passe les données du formulaire à false
     return setForm(false);
+  };
+
+  const handleDelete = (id) => {
+    let ok = window.confirm(
+      "Êtes-vous sûr de vouloir supprimer cette action ?"
+    );
+    
+    if (ok) {
+      const oldActions = [...actions];
+
+      DeleteAction(id).catch((err) => {  
+        displayDeleteError();
+        // Si l'api nous renvoie une erreur on remet l'ancien tableau
+        return setActions(oldActions);
+      });
+
+      // Copie du tableau sur lequel on suprime l'action
+      let copy = [...actions];
+      copy = copy.filter((a) => a.id !== id);
+      return setActions(copy);
+    }
+    // on retourne quelque chise car safari bug sur les fonction async
+    return false;
   };
 
   return (
@@ -85,9 +108,7 @@ const Actions = () => {
         <div>
           <h1>Listes des actions marketing</h1>
           {/* L'objet de setForm correspond aux données que l'on envoies au formulaire */}
-          <button onClick={() => setForm({})}>
-            Ajouter une nouvelle action
-          </button>
+          <button onClick={() => setForm({})}>Nouvelle action</button>
 
           <table className="tableau-style">
             <thead>
@@ -123,20 +144,13 @@ const Actions = () => {
                   <td>
                     <button
                       className="btn-small"
-                      onClick={() =>
-                        DeleteAction(a.id).catch((err) => {
-                          // let copy = [...actions];
-                          // copy = copy.filter((a) => copy.id !== a.id);
-                          // setActions(copy);
-                          deleteError();
-                        })
-                      }
+                      onClick={() => handleDelete(a.id)}
                     >
                       <img src={trash} alt="supression" />
                     </button>
                     {/* Les données qu'il y a dans setForm(a) correspondent à l'action. */}
                     <button className="btn-small" onClick={() => setForm(a)}>
-                    <img src={pen} alt="ajout" />
+                      <img src={pen} alt="ajout" />
                     </button>
                   </td>
                 </tr>

@@ -84,7 +84,7 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
        
         <div className="btn-container">
           <button onSubmit={handleSubmit}>
-            {add ? "Ajouter une nouvelles action" : "Modifier"}
+            {add ? "Valider" : "Modifier"}
           </button>
           <button onClick={() => onClose()}>Fermer</button>
         </div>
