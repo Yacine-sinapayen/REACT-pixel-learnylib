@@ -2,7 +2,7 @@ const baseUrl = "https://squedio.com/marketing/api/v1/actions";
 
 // POST
 export const CreateAction = async (body) => {
-  return await fetch(`https://squedio.com/marketing/api/v1/actions`, {
+  return await fetch(`${baseUrl}`, {
     method: "POST",
     body: JSON.stringify(body),
   });
@@ -10,7 +10,7 @@ export const CreateAction = async (body) => {
 
 // PUT
 export const EditAction = async (body) => {
-  return await fetch(`https://squedio.com/marketing/api/v1/actions/${body.id}`, {
+  return await fetch(`${baseUrl}/${body.id}`, {
     method: "PUT",
     body: JSON.stringify(body),
   });
@@ -18,7 +18,7 @@ export const EditAction = async (body) => {
 
 // Delete
 export const DeleteAction = async (id) => {
-  return await fetch(`https://squedio.com/marketing/api/v1/actions/${id}`, {
+  return await fetch(`${baseUrl}/${id}`, {
     method: "DELETE",
   });
 };

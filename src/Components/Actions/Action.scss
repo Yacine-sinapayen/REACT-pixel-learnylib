@@ -1,0 +1,47 @@
+/* Style du tableau */
+
+.tableau-style{
+    display: block;
+    overflow-x: auto;
+    table-layout: fixed;
+    border-collapse: collapse;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    margin: auto;
+    border-right: 2px solid #dfdfe6;
+    border-left: 2px solid #dfdfe6;
+}
+
+thead tr {
+    background-color: #1C1C25;
+    color: #fff;
+    text-align: center;
+}
+
+th, td {
+    padding: 15px 20px;
+}
+
+tbody tr, td, th {
+    border-bottom: 1px solid rgba(0,0,0,.2);
+}
+
+/* Permet de créer un tableau zébré */
+tbody tr:nth-child(odd){
+    background-color:rgba(0,0,0,.05);
+  }
+
+/* Permet de mettre un border que sur la dernière ligne du tableau */
+tbody tr:last-of-type{
+    border-bottom: 2px solid #dfdfe6;
+}
+
+td, th{
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
+}
+
+.btn-red{
+    background: red;
+}

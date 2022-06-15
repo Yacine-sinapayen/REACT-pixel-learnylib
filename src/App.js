@@ -1,16 +1,13 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import Actions from './Components/Actions';
-import './index.css'
+import Actions from "./Components/Actions/Actions";
+import NavBar from "./Components/NavBar/NavBar";
 
-const App = () => { 
- 
+const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Actions />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <NavBar />
+      <Actions />
+    </>
   );
-}
+};
 
 export default App;
