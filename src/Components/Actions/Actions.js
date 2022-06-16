@@ -74,11 +74,11 @@ const Actions = () => {
     let ok = window.confirm(
       "Êtes-vous sûr de vouloir supprimer cette action ?"
     );
-    
+
     if (ok) {
       const oldActions = [...actions];
 
-      DeleteAction(id).catch((err) => {  
+      DeleteAction(id).catch((err) => {
         displayDeleteError();
         // Si l'api nous renvoie une erreur on remet l'ancien tableau
         return setActions(oldActions);
