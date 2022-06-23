@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { CreateAction, EditAction, DeleteAction } from "../../Api/ActionApi";
+import React, { useEffect, useState } from "react";
+import { CreateAction, EditAction, DeleteAction } from "../../api/ActionApi";
 import "./Action.scss";
 import ActionForm from "../ActionForm/ActionForm";
 import { ToastContainer, toast } from "react-toastify";

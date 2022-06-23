@@ -1,5 +1,6 @@
+import React from 'react';
 import Actions from "./Components/Actions/Actions";
-import NavBar from "./Components/NavBar/NavBar";
+import NavBar from "./Components/Navbar/Navbar";
 
 const App = () => {
   return (
