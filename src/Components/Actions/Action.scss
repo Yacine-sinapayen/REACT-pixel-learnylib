@@ -10,6 +10,9 @@
     margin: auto;
     border-right: 2px solid #dfdfe6;
     border-left: 2px solid #dfdfe6;
+    border-radius: 8px;
+    font-size: 12px;
+    height: 540px;
 }
 
 thead tr {
@@ -19,7 +22,7 @@ thead tr {
 }
 
 th, td {
-    padding: 15px 20px;
+    padding: 7px 10px;
 }
 
 tbody tr, td, th {
@@ -44,4 +47,22 @@ td, th{
 
 .btn-red{
     background: red;
+}
+
+@media screen and (min-height: 685px) {
+    .tableau-style{
+        height : 740px;
+    }
+}
+
+@media screen and (max-height: 670px) {
+    .tableau-style{
+        height : 440px;
+    }
+}
+
+@media screen and (max-height: 620px) {
+    .tableau-style{
+        height : 340px;
+    }
 }

@@ -105,7 +105,7 @@ const Actions = () => {
           onSubmit={(a) => handleSubmit(a)}
         />
       ) : (
-        <div>
+        <>
           <h1>Listes des actions marketing</h1>
           {/* L'objet de setForm correspond aux données que l'on envoies au formulaire */}
           <button onClick={() => setForm({})}>Nouvelle action</button>
@@ -157,7 +157,7 @@ const Actions = () => {
               ))}
             </tbody>
           </table>
-        </div>
+        </>
       )}
     </div>
   );
