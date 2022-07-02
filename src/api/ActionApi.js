@@ -8,6 +8,14 @@ export const CreateAction = async (body) => {
   });
 };
 
+// Delete
+export const DeleteAction = async (id) => {
+  return await fetch(`${baseUrl}/${id}`, {
+    method: "DELETE",
+  });
+};
+
+
 // PUT
 export const EditAction = async (body) => {
   return await fetch(`${baseUrl}/${body.id}`, {
@@ -16,9 +24,3 @@ export const EditAction = async (body) => {
   });
 };
 
-// Delete
-export const DeleteAction = async (id) => {
-  return await fetch(`${baseUrl}/${id}`, {
-    method: "DELETE",
-  });
-};

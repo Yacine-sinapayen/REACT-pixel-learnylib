@@ -1,28 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { CreateAction, EditAction, DeleteAction } from "../../api/ActionApi";
 import "./Action.scss";
+import trash from "../../Assets/trash.png";
+import pen from "../../Assets/pen.png";
 import ActionForm from "../ActionForm/ActionForm";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import trash from "../../Assets/trash.png";
-import pen from "../../Assets/pen.png";
-
 const Actions = () => {
   const [actions, setActions] = useState([]);
-  // Cette var correspond aux données que l'on envoies au formulaire
-  // Si form = false on masque le formulaire
-  // Si form = {} (objet vide) on va créer une nouvelle action
-  // Si form = {objet plein} on va modifier une action
-  const [form, setForm] = useState(false);
 
-  // Gestion des erreurs de l'API
-  const displayCreateError = () =>
-    toast.error("Erreur lors de la création de l'action");
-  const diplayEditError = () =>
-    toast.error("Erreur lors de la modification de l'action");
-  const displayDeleteError = () =>
-    toast.error("Erreur lors de la suppression de l'action");
+  // form correspond aux données envoyées par le formulaire, 3 cas :
+  // Si form = false alors le formulaire n'est pas visible
+  // Si form = {} alors nous sommes dans un POST
+  // Si form = {objet plein} alors nous sommes dans un PUT
+  const [form, setForm] = useState(false);
 
   // GET
   useEffect(() => {
@@ -37,40 +29,46 @@ const Actions = () => {
 
   //PUT and POST
   const handleSubmit = (newAction) => {
-    // On verifie si on est en mode ajout ou modification
+    // Même principe qu'avec action côté formulaire
+    // Si add = {} alors POST
+    // Si add = {objet plein} alors PUT
     const add = Object.keys(form).length === 0;
-    //  On récupère la verion du tableau la plus recente
-    // après mon PUT/POST j'insère la newAction dans la version du tableau
-    // la plus rescente.
+
+    // J'intencie une const qui récupère la version la plus rescente de mon tableau d'actions
     const oldActions = [...actions];
-    // Je créais une copy car je ne moddifie jamais directement state
+
+    // Je créais une copy car je ne modifie jamais directement state
     let copy = [...actions];
 
-    // Si on est dans le cas d'une modification
-    // on retire l'ancienne version de l'action du tableau.
     if (!add) {
+      // Dans le cas d'un PUT, copy.filter me renvoie toutes les actions ayant un id strictement différent de celle que je suis en train de modifier afin de retirer l'ancienne version de l'action.
       copy = copy.filter((a) => a.id !== newAction.id);
+      // Je met à jour mon api avec l'action modifiée
       EditAction(newAction).catch((err) => {
-        // Gestion de l'erreur en édition
+        // Gestion de l'erreur
         diplayEditError();
       });
     } else {
+      // Dans le cas d'un POST je mets à jour mon api
       CreateAction(newAction).catch((err) => {
-        // Une fois l'action créee je renvoie un tableau
-        // des anciennes action + la nouvelle action.
+        //  En cas d'erreur je renvoie l'ancienne version du tableau d'action
         setActions(oldActions);
-        // Gestion de l'erreur en création
+        // Et j'affiche un msg d'erreure
         displayCreateError();
       });
     }
+    // J'envoie dans la copy de mon tableau d'action la newAction
     copy.push(newAction);
+    // Et je met à jour mon state avec cette même copy du tableau d'action car il ne faut jamais modifier directement le state
     setActions(copy);
 
-    // Pour masquer le formulaire on passe les données du formulaire à false
+    // Puis je masque le formulaire en passant son state à false
     return setForm(false);
   };
 
+  // DELETE
   const handleDelete = (id) => {
+    // Confirmer la supression
     let ok = window.confirm(
       "Êtes-vous sûr de vouloir supprimer cette action ?"
     );
@@ -89,16 +87,23 @@ const Actions = () => {
       copy = copy.filter((a) => a.id !== id);
       return setActions(copy);
     }
-    // on retourne quelque chise car safari bug sur les fonction async
+    // on retourne quelque chose car safari bug sur les fonction async
     return false;
   };
+
+  // Gestion des erreurs de l'API
+  const displayCreateError = () =>
+    toast.error("Erreur lors de la création de l'action");
+  const diplayEditError = () =>
+    toast.error("Erreur lors de la modification de l'action");
+  const displayDeleteError = () =>
+    toast.error("Erreur lors de la suppression de l'action");
 
   return (
     <div className="container">
       <ToastContainer />
+      {/* Si form = {} || {objet plain} alors je l'affiche sinon j'affiche le composant Actions */}
       {form ? (
-        /* Si l'objet que l'on passe dans action={form} est 
-        vide alors ça sera un formulaire d'ajout sinon ça sera un formulaire de modfification */
         <ActionForm
           action={form}
           onClose={() => setForm(false)}
