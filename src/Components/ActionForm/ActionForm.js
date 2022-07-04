@@ -3,7 +3,7 @@ import moment from "moment";
 import { v4 as uuid } from "uuid";
 import "./ActionForm.scss";
 
-// action={form} contient le contenue de mon formulaire.
+// action={form} est = au contenu du state form
 const ActionForm = ({ action, onClose, onSubmit }) => {
   // Je gère le POST et le PUT dans une seul est même fonction
   // Si add = {} alors POST

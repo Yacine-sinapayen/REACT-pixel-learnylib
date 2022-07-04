@@ -105,6 +105,7 @@ const Actions = () => {
       {/* Si form = {} || {objet plain} alors je l'affiche sinon j'affiche le composant Actions */}
       {form ? (
         <ActionForm
+        // action est = au contenu du state form
           action={form}
           onClose={() => setForm(false)}
           onSubmit={(a) => handleSubmit(a)}
