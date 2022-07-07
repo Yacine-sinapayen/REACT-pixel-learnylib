@@ -22,7 +22,7 @@ thead tr {
 }
 
 th, td {
-    padding: 7px 10px;
+    padding: 7px 15px;
 }
 
 tbody tr, td, th {
@@ -51,18 +51,7 @@ td, th{
 
 @media screen and (min-height: 685px) {
     .tableau-style{
-        height : 740px;
+        height : 540px;
     }
 }
 
-@media screen and (max-height: 670px) {
-    .tableau-style{
-        height : 440px;
-    }
-}
-
-@media screen and (max-height: 620px) {
-    .tableau-style{
-        height : 340px;
-    }
-}
