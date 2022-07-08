@@ -16,6 +16,14 @@ const Actions = () => {
   // Si form = {objet plein} alors nous sommes dans un PUT
   const [form, setForm] = useState(false);
 
+  // Gestion des erreurs de l'API avec Taostify
+  const displayCreateError = () =>
+    toast.error("Erreur lors de la création de l'action");
+  const diplayEditError = () =>
+    toast.error("Erreur lors de la modification de l'action");
+  const displayDeleteError = () =>
+    toast.error("Erreur lors de la suppression de l'action");
+
   // GET
   useEffect(() => {
     // Récupération de toutes les actions
@@ -29,20 +37,21 @@ const Actions = () => {
 
   //PUT and POST
   const handleSubmit = (newAction) => {
-    // Même principe qu'avec action côté formulaire
+    // Même principe qu'avec action côté formulaire, j'initie add à un objet vide
     // Si add = {} alors POST
     // Si add = {objet plein} alors PUT
     const add = Object.keys(form).length === 0;
 
-    // J'intencie une const qui récupère la version la plus rescente de mon tableau d'actions
+    // J'intencie une const qui récupère "l'ancienne plus rescente" version de mon tableau d'actions
     const oldActions = [...actions];
 
-    // Je créais une copy car je ne modifie jamais directement state
+    // copie du state
     let copy = [...actions];
 
     if (!add) {
-      // Dans le cas d'un PUT, copy.filter me renvoie toutes les actions ayant un id strictement différent de celle que je suis en train de modifier afin de retirer l'ancienne version de l'action.
+      // Dans le cas d'un PUT, copy.filter me renvoie un tableau d'actions ayant un id strictement différent de l'action que je suis en train de modifier.
       copy = copy.filter((a) => a.id !== newAction.id);
+
       // Je met à jour mon api avec l'action modifiée
       EditAction(newAction).catch((err) => {
         // Gestion de l'erreur
@@ -53,13 +62,16 @@ const Actions = () => {
       CreateAction(newAction).catch((err) => {
         //  En cas d'erreur je renvoie l'ancienne version du tableau d'action
         setActions(oldActions);
-        // Et j'affiche un msg d'erreure
+
+        // Et j'affiche un msg d'erreur
         displayCreateError();
       });
     }
-    // J'envoie dans la copy de mon tableau d'action la newAction
+    
+    // J'envoie dans la "copy" de mon tableau d'action la newAction
     copy.push(newAction);
-    // Et je met à jour mon state avec cette même copy du tableau d'action car il ne faut jamais modifier directement le state
+
+    // Et je mets à jour mon state avec le tableau "copy" qui contient la newAction
     setActions(copy);
 
     // Puis je masque le formulaire en passant son state à false
@@ -91,21 +103,13 @@ const Actions = () => {
     return false;
   };
 
-  // Gestion des erreurs de l'API
-  const displayCreateError = () =>
-    toast.error("Erreur lors de la création de l'action");
-  const diplayEditError = () =>
-    toast.error("Erreur lors de la modification de l'action");
-  const displayDeleteError = () =>
-    toast.error("Erreur lors de la suppression de l'action");
-
   return (
     <div className="container">
       <ToastContainer />
       {/* Si form = {} || {objet plain} alors je l'affiche sinon j'affiche le composant Actions */}
       {form ? (
         <ActionForm
-        // action est = au contenu du state form
+          // action est = au contenu du state form
           action={form}
           onClose={() => setForm(false)}
           onSubmit={(a) => handleSubmit(a)}
@@ -113,7 +117,7 @@ const Actions = () => {
       ) : (
         <>
           <h1>Listes des actions marketing</h1>
-          {/* L'objet de setForm correspond aux données que l'on envoies au formulaire */}
+          {/* L'objet vide dans setForm récupérera les données modifiées ou nouvelles qui seront entrées dans le formulaire */}
           <button onClick={() => setForm({})}>Nouvelle action</button>
 
           <table className="tableau-style">
@@ -148,15 +152,15 @@ const Actions = () => {
                   <td>{a.enrollments}</td>
                   <td>{a.value}</td>
                   <td>
+                    {/* Les données qu'il y a dans setForm(a) correspondent à l'action en cours. */}
+                    <button className="btn-small" onClick={() => setForm(a)}>
+                      <img src={pen} alt="modification" />
+                    </button>
                     <button
                       className="btn-small"
                       onClick={() => handleDelete(a.id)}
                     >
                       <img src={trash} alt="supression" />
-                    </button>
-                    {/* Les données qu'il y a dans setForm(a) correspondent à l'action. */}
-                    <button className="btn-small" onClick={() => setForm(a)}>
-                      <img src={pen} alt="ajout" />
                     </button>
                   </td>
                 </tr>

@@ -5,7 +5,7 @@ import "./ActionForm.scss";
 
 // action={form} est = au contenu du state form
 const ActionForm = ({ action, onClose, onSubmit }) => {
-  // Je gère le POST et le PUT dans une seul est même fonction
+  // Je gère le POST et le PUT dans une seule est même fonction
   // Si add = {} alors POST
   // Si add = {objet plein} alors PUT
   const add = Object.keys(action).length === 0;

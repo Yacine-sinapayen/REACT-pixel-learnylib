@@ -9,5 +9,5 @@ The objective of this application is to provide the marketing department with an
 ![](src/Assets/resultat-1.png)
 ![](src/Assets/resultat-2.png)
 
-Info : Ce projet contient des données relatif à la stratégie marketing de learnylib est ne doit en aucun cas se retrouver en mode "public" sur un de vos repos distant (gitHub, gitLab etc). 
+Info : Ce projet contient des données relatif à la stratégie marketing de learnylib est ne doit en aucun cas se retrouver en mode "public" sur un repo. 
 
