@@ -1,4 +1,4 @@
-const baseUrl = "https://squedio.com/marketing/apir/v1/actions";
+const baseUrl = "https://squedio.com/marketing/api/v1/actions";
 
 // POST
 export const CreateAction = async (body) => {
