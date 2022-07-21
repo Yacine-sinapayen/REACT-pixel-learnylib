@@ -3,7 +3,7 @@ import { CreateAction, EditAction, DeleteAction } from "../../api/ActionApi";
 import "./Action.scss";
 import trash from "../../Assets/trash.png";
 import pen from "../../Assets/pen.png";
-import ActionForm from "../ActionForm/ActionForm";
+import ActionForm from "../../Components/ActionForm/ActionForm";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
