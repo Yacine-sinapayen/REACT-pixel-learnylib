@@ -2,7 +2,8 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Actions from "./pages/Actions/Actions";
-import NavBar from "./Components/Navbar/Navbar";
+import NavBar from "./components/Navbar/Navbar";
+import "./scss/index.scss";
 
 const App = () => {
   return (
