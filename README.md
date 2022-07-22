@@ -11,3 +11,6 @@ The objective of this application is to provide the marketing department with an
 
 Info : Ce projet contient des données relatif à la stratégie marketing de learnylib est ne doit en aucun cas se retrouver en mode "public" sur un repo. 
 
+## L'authentification est gérée via le service firebase.
+
+
