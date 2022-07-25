@@ -10,8 +10,11 @@ const App = () => {
     <>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/actions" element={<Actions />} />
+      {/* C'est depuis ma route parent Home que je check la connexion */}
+        <Route path="/" element={<Home />}>
+        {/* Si la route parent valide la connexion alors j'affiche cette route */}
+          <Route path="/actions" element={<Actions />}/>
+        </Route>
       </Routes>
     </>
   );
