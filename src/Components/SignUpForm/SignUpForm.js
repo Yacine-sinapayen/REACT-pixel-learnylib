@@ -1,9 +1,12 @@
 import React, { useRef, useState, useContext } from "react";
 import { UserContext } from "../../context/userContext.js";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUpForm() {
   // J'importe ma méthode signUp depuis mon userContext.js
   const { signUp } = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   // State du msg de validation que je passe à ma balise <p>
   const [validation, setValidation] = useState("");
@@ -51,20 +54,25 @@ export default function SignUpForm() {
       );
       //  reset les inputs du form
       formRef.current.reset();
-      // 
+  
       setValidation("");
-      console.log(cred);
+      // console.log(cred); => me renvoie les valeurs de mes inputs
+      // Une fois connecté je veux accéder à ma route privée
+      navigate("/actions");
+
     } catch (err) {
       // Gestion des msg d'erreur en fonction de la res côté server firebase
       if (err.code === "auth/invalid-email") {
-        setValidation("Email format invalid");
+        setValidation("Le format de l'email n'est pas valide");
       }
 
       if (err.code === "auth/email-already-in-use") {
-        setValidation("Email already used");
+        setValidation("Email déjà utilisé");
       }
     }
   };
+
+  // 
 
   return (
     <div className="center-content mrg-auto w75p gap40 flex block">
