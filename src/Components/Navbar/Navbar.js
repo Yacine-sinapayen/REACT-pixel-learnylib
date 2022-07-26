@@ -1,5 +1,4 @@
 import React from "react";
-import "./NavBar.scss";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../Assets/Logo.png";
@@ -20,16 +19,16 @@ export default function NavBar() {
   };
 
   return (
-    <nav>
-      <div className="container-navbar">
-        <div className="logo w60p end">
-          <img src={Logo} alt="logo" />
-          <span>Marketing</span>
+    <nav className="top-0 h50 border-bottom-light">
+      <div className="flex middle center h100p">
+        <div className="logo flex gap5 w60p end">
+          <img className="h30" src={Logo} alt="logo" />
+          <span className="italic dark-light">Marketing</span>
         </div>
         <div className="flex w40p end gap10">
           <button 
           onClick={logOut} 
-          className="button red-bg">
+          className="btn-nav dark-light border-none font-07 pointer">
             Déconnexion
           </button>
         </div>

@@ -116,9 +116,11 @@ const Actions = () => {
         />
       ) : (
         <>
-          <h1>Listes des actions marketing</h1>
+          <h2 className="dark">Listes des actions marketing</h2>
           {/* L'objet vide dans setForm récupérera les données modifiées ou nouvelles qui seront entrées dans le formulaire */}
-          <button onClick={() => setForm({})}>Nouvelle action</button>
+          <button 
+          className="btn mrg-b20 w100 center"
+          onClick={() => setForm({})}>Nouvelle action</button>
 
           <table className="tableau-style">
             <thead>
@@ -153,11 +155,12 @@ const Actions = () => {
                   <td>{a.value}</td>
                   <td>
                     {/* Les données qu'il y a dans setForm(a) correspondent à l'action en cours. */}
-                    <button className="btn-small" onClick={() => setForm(a)}>
+                    <button 
+                    className="btn mrg-5" onClick={() => setForm(a)}>
                       <img src={pen} alt="modification" />
                     </button>
                     <button
-                      className="btn-small"
+                      className="btn mrg-5"
                       onClick={() => handleDelete(a.id)}
                     >
                       <img src={trash} alt="supression" />
