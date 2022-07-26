@@ -1,25 +1,19 @@
-import React, { useContext } from 'react';
-import { UserContext } from '../../context/userContext';
-import { Outlet, Navigate } from "react-router-dom";
-import SignUpForm from '../../components/SignUpForm/SignUpForm';
+import React, {useContext} from "react";
+import { UserContext } from "../../context/userContext";
+import SignUpForm from "../../components/SignUpForm/SignUpForm";
+import PrivateActions from "../Home/PrivateActions/PrivateActions";
 
 export default function Home() {
 
-const {currentUser} = useContext(UserContext);
-console.log("PRIVATEE", currentUser);
-
-if(!currentUser){
-  return <Navigate to="/"/>
-}
+//  J'import mon context pour pouvoir changer le texte de la page home en fonction  du status de l'utilisateur
+  const {currentUser} = useContext(UserContext);
 
   return (
-    <div className='container flex middle' style={{ height:"90vh" }}>
-    <SignUpForm />
-      {/* Outlet permet de définir le lieu où je veux renvoyer ma route imbriquée "actions" 
-      une fois le user connecté */}
-      {currentUser && (
-        <Outlet />
-      )}
+    <div className="container p-5">
+      <h1 className="display-3 text-light">
+        { currentUser ? (<PrivateActions />) : (<SignUpForm />)}
+      </h1>
+      
     </div>
-  )
-};
+  );
+}
