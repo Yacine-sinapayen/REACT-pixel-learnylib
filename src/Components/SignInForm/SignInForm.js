@@ -2,9 +2,9 @@ import React, { useRef, useState, useContext } from "react";
 import { UserContext } from "../../context/userContext.js";
 import { useNavigate } from "react-router-dom";
 
-export default function SignUpForm() {
-  // J'importe ma méthode signUp depuis mon userContext.js
-  const { signUp } = useContext(UserContext);
+export default function SignInForm() {
+  // J'importe ma méthode signIn depuis mon userContext.js
+  const { signIn } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -29,46 +29,20 @@ export default function SignUpForm() {
     // Ce log nous renvoie un objet avec une propriété current à l'intérieur de laquelle il y a mon tableau d'inputs. Les refs de mes inputs récupèrent les values et les insèrent dans un tableau
     // console.log(inputs);
 
-    // Validation données coté front
-    // Validation de la longueur du mdp en ciblant les champs 1 et 2 de mon tableau de ref qui correspondent aux deux derniers champs de mon form
-    if (
-      (inputs.current[1].value.length || inputs.current[2].value.length) < 6
-    ) {
-      setValidation("6 caractères minimum  🙏");
-      // Je sors de la fonction avec un :
-      return;
-    }
-    // On vérifie que les deux mpd soient identiques
-    else if (inputs.current[1].value !== inputs.current[2].value) {
-      setValidation("Les mots de passe ne correspondent pas");
-   
-      // returen afin de sortir de la fonction
-      return;
-    }
-
     // Inscription côté server Firebase. 
     try {
-      const cred = await signUp(
+      const cred = await signIn(
         inputs.current[0].value,
         inputs.current[1].value
       );
-      //  reset les inputs du form
-      formRef.current.reset();
-  
+
       setValidation("");
       // console.log(cred); => me renvoie les valeurs de mes inputs
       // Une fois connecté je veux accéder à ma route privée
       navigate("/marketing/private-actions");
 
     } catch (err) {
-      // Gestion des msg d'erreur en fonction de la res côté server firebase
-      if (err.code === "auth/invalid-email") {
-        setValidation("Le format de l'email n'est pas valide");
-      }
-
-      if (err.code === "auth/email-already-in-use") {
-        setValidation("Email déjà utilisé");
-      }
+        setValidation("Oops email et/ou mot de passe incorrect")
     }
   };
 
@@ -89,7 +63,7 @@ export default function SignUpForm() {
           required={true}
           type="email"
           placeholder="email"
-          id="signUpEmail"
+          id="signInEmail"
           maxLength="200"
         />
         <input
@@ -99,20 +73,11 @@ export default function SignUpForm() {
           type="password"
           placeholder="Mot de passe"
           maxLength="200"
-          id="signUpPwd"
-        />
-        <input
-          ref={addInputs}
-          name="pwd"
-          required={true}
-          type="password"
-          placeholder="Mot de passe"
-          maxLength="200"
-          id="repeatPwd"
+          id="signInPwd"
         />
         <p className="red">{validation}</p>
         <div className="center-content">
-          <button className="button blue-bg">Inscription</button>
+          <button className="button blue-bg">Connexion</button>
         </div>
       </form>
     </div>
