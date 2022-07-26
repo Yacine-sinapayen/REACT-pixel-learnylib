@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { CreateAction, EditAction, DeleteAction } from "../../api/ActionApi";
-import "./Action.scss";
-import trash from "../../Assets/trash.png";
-import pen from "../../Assets/pen.png";
-import ActionForm from "../../components/ActionForm/ActionForm";
+import { CreateAction, EditAction, DeleteAction } from "../../../api/ActionApi";
+import "./PrivateAction.scss";
+import trash from "../../../Assets/trash.png";
+import pen from "../../../Assets/pen.png";
+import ActionForm from "../../../components/ActionForm/ActionForm";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

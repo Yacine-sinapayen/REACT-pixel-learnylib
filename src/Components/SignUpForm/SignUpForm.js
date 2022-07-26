@@ -58,7 +58,7 @@ export default function SignUpForm() {
       setValidation("");
       // console.log(cred); => me renvoie les valeurs de mes inputs
       // Une fois connecté je veux accéder à ma route privée
-      navigate("/actions");
+      navigate("/marketing/private-actions");
 
     } catch (err) {
       // Gestion des msg d'erreur en fonction de la res côté server firebase
