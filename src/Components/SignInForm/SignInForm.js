@@ -9,7 +9,7 @@ export default function SignInForm() {
   const navigate = useNavigate();
 
   // State du msg de validation que je passe à ma balise <p>
-  const [validation, setValidation] = useState("");
+  const [validation, setValidation] = useState(" ");
 
   // UseRef me permet de récupérer tous les éléments de mes inputs dans un tableau sans avoir à mapper dessus
   const inputs = useRef([]);
@@ -49,14 +49,14 @@ export default function SignInForm() {
   // 
 
   return (
-    <div className="center-content mrg-auto w75p gap40 flex block">
+    <div className="center-content mrg-auto w75p gap40 flex">
       <form
         // Permet de reset les inputs du formulaire
         onSubmit={handleForm}
         ref={formRef}
-        className="w50p gap10"
+        className="w50p gap10 flex center column"
       >
-        <h1 className="self-center">Inscription</h1>
+        <h1 className="self-center dark">Connexion</h1>
         <input
           ref={addInputs}
           name="email"
@@ -77,7 +77,7 @@ export default function SignInForm() {
         />
         <p className="red">{validation}</p>
         <div className="center-content">
-          <button className="button blue-bg">Connexion</button>
+          <button className="btn blue-bg mrg-5 w100 center">Connexion</button>
         </div>
       </form>
     </div>
