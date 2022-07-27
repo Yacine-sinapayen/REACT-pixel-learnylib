@@ -32,9 +32,11 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
   };
 
   return (
-    <div className="flex middle center">
-      <form className="flex center column" onSubmit={handleSubmit}>
-        <h2 className="dark">Créer une nouvelle action marketing</h2>
+    <div className="fcontainer p-5 h90vh flex center-content mrg-auto w75p gap40">
+      <form 
+      className="flex gap10 center column " 
+      onSubmit={handleSubmit}>
+        <h1 className="dark">Créer une nouvelle action marketing</h1>
         <input
           type="text"
           maxLength="200"
@@ -78,11 +80,11 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
         />
 
         <div className="btn-container flex row gap20 center">
-          <button className="btn w100 center" onSubmit={handleSubmit}>
+          <button className="btn w120 center" onSubmit={handleSubmit}>
             {add ? "Ajouter" : "Modifier"}
           </button>
           {/* onClose est une fonction que je récupère via mes props depuis le composant parent Actions */}
-          <button className="btn w100 center" onClick={() => onClose()}>Fermer</button>
+          <button className="btn w120 center" onClick={() => onClose()}>Fermer</button>
         </div>
       </form>
     </div>

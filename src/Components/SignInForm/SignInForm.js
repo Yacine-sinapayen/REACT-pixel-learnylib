@@ -49,7 +49,7 @@ export default function SignInForm() {
   // 
 
   return (
-    <div className="center-content mrg-auto w75p gap40 flex">
+    <div className="container p-5 h90vh flex center-content mrg-auto w75p gap40">
       <form
         // Permet de reset les inputs du formulaire
         onSubmit={handleForm}
@@ -75,10 +75,10 @@ export default function SignInForm() {
           maxLength="200"
           id="signInPwd"
         />
-        <p className="red">{validation}</p>
-        <div className="center-content">
-          <button className="btn blue-bg mrg-5 w100 center">Connexion</button>
+        <div className=" center-content">
+          <button className="btn blue-bg w100 center">Connexion</button>
         </div>
+        <p className="red">{validation}</p>
       </form>
     </div>
   );

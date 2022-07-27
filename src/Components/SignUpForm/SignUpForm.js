@@ -75,7 +75,7 @@ export default function SignUpForm() {
   // 
 
   return (
-    <div className="center-content mrg-auto w75p gap40 flex block">
+    <div className="container p-5 h90vh flex center-content mrg-auto w75p gap40">
       <form
         // Permet de reset les inputs du formulaire
         onSubmit={handleForm}

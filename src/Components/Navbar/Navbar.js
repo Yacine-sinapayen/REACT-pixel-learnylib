@@ -26,9 +26,10 @@ export default function NavBar() {
           <span className="italic dark-light">Marketing</span>
         </div>
         <div className="flex w40p end gap10">
-          <button 
-          onClick={logOut} 
-          className="btn-nav dark-light border-none font-07 pointer">
+          <button
+            onClick={logOut}
+            className="btn-nav dark-light border-none font-07 pointer"
+          >
             Déconnexion
           </button>
         </div>

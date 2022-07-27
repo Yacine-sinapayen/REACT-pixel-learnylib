@@ -104,7 +104,7 @@ const Actions = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container h90vh">
       <ToastContainer />
       {/* Si form = {} || {objet plain} alors je l'affiche sinon j'affiche le composant Actions */}
       {form ? (
@@ -119,7 +119,7 @@ const Actions = () => {
           <h2 className="dark">Listes des actions marketing</h2>
           {/* L'objet vide dans setForm récupérera les données modifiées ou nouvelles qui seront entrées dans le formulaire */}
           <button 
-          className="btn mrg-b20 w100 center"
+          className="btn mrg-b20 w120 center"
           onClick={() => setForm({})}>Nouvelle action</button>
 
           <table className="tableau-style">
