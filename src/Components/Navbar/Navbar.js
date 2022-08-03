@@ -20,7 +20,7 @@ export default function NavBar() {
 
   return (
     <nav className="top-0 h50 border-bottom-light">
-      <div className="flex middle center h100p">
+      <div className="flex middle center h100p container">
         <div className="logo flex gap5 w60p end">
           <img className="h30" src={Logo} alt="logo" />
           <span className="italic dark-light">Marketing</span>
