@@ -3,7 +3,9 @@
 .tableau-style{
     display: block;
     overflow-x: auto;
-    table-layout: fixed;
+    overflow-y: auto;
+    table-layout: auto;
+    width: 100%;
     border-collapse: collapse;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
     cursor: pointer;
@@ -15,10 +17,16 @@
     height: 340px;
 }
 
+td > p{
+    width: 80px;
+}
+
 thead tr {
     background-color: #1C1C25;
     color: #fff;
-    text-align: center;
+    text-align: center;  
+    position: sticky;
+    top:0;
 }
 
 th, td {
@@ -47,6 +55,9 @@ td, th{
 
 .btn-red{
     background: red;
+}
+a{
+    color: #4BBEF2;
 }
 
 @media screen and (min-height: 685px) {

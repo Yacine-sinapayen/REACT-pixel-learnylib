@@ -6,6 +6,7 @@ import pen from "../../../Assets/pen.png";
 import ActionForm from "../../../components/ActionForm/ActionForm";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment";
 
 const Actions = () => {
   const [actions, setActions] = useState([]);
@@ -43,7 +44,7 @@ const Actions = () => {
     const add = Object.keys(form).length === 0;
 
     // J'intencie une const qui récupère "l'ancienne plus rescente" version de mon tableau d'actions
-    const oldActions = [...actions];
+    const oldActions = [...actions]
 
     // copie du state
     let copy = [...actions];
@@ -130,6 +131,7 @@ const Actions = () => {
               <tr>
                 <th>Nom de l'action</th>
                 <th>Email formateur</th>
+                <th>Date de création</th>
                 <th>Média</th>
                 <th>Mots clés</th>
                 <th>Url Cible</th>
@@ -143,35 +145,48 @@ const Actions = () => {
               </tr>
             </thead>
             <tbody>
-              {actions.map((a) => (
-                <tr key={a.id}>
-                  <td>{a.title}</td>
-                  <td>{a.emailFormateur}</td>
-                  <td> {a.media}</td>
-                  <td> {a.tags}</td>
-                  <td>
-                    <a href={a.target_url} target="_blank" rel="noopener noreferrer">{a.target_url}</a>
-                  </td>
-                  <td>{a.shipments}</td>
-                  <td>{a.clicks}</td>
-                  <td>https://formations.learnylib.com/st/{a.id}</td>
-                  <td>{a.new_accounts}</td>
-                  <td>{a.enrollments}</td>
-                  <td>{a.value}</td>
-                  <td>
-                    {/* Les données qu'il y a dans setForm(a) correspondent à l'action en cours. */}
-                    <button className="btn mrg-5" onClick={() => setForm(a)}>
-                      <img src={pen} alt="modification" />
-                    </button>
-                    <button
-                      className="btn mrg-5"
-                      onClick={() => handleDelete(a.id)}
-                    >
-                      <img src={trash} alt="supression" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {actions
+                .sort(function (a, b) {
+                  return new Date(b.created_at) - new Date(a.created_at);
+                })
+                .map((i) => (
+                  <tr key={i.id}>
+                    <td>{i.title}</td>
+                    <td>{i.emailFormateur}</td>
+                    <td>
+                      <p>{moment(i.created_at).format("YYYY-MM-DD")}</p>
+                    </td>
+                    <td> {i.media}</td>
+                    <td> {i.tags}</td>
+                    <td>
+                      <a
+                        href={i.target_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {i.target_url}
+                      </a>
+                    </td>
+                    <td>{i.shipments}</td>
+                    <td>{i.clicks}</td>
+                    <td>https://formations.learnylib.com/st/{i.id}</td>
+                    <td>{i.new_accounts}</td>
+                    <td>{i.enrollments}</td>
+                    <td>{i.value}</td>
+                    <td>
+                      {/* Les données qu'il y a dans setForm(a) correspondent à l'action en cours. */}
+                      <button className="btn mrg-5" onClick={() => setForm(i)}>
+                        <img src={pen} alt="modification" />
+                      </button>
+                      <button
+                        className="btn mrg-5"
+                        onClick={() => handleDelete(i.id)}
+                      >
+                        <img src={trash} alt="supression" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </>
