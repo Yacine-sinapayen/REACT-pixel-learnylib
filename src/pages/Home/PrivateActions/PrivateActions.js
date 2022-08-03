@@ -67,7 +67,7 @@ const Actions = () => {
         displayCreateError();
       });
     }
-    
+
     // J'envoie dans la "copy" de mon tableau d'action la newAction
     copy.push(newAction);
 
@@ -118,18 +118,22 @@ const Actions = () => {
         <>
           <h2 className="dark">Listes des actions marketing</h2>
           {/* L'objet vide dans setForm récupérera les données modifiées ou nouvelles qui seront entrées dans le formulaire */}
-          <button 
-          className="btn mrg-b20 w120 center"
-          onClick={() => setForm({})}>Nouvelle action</button>
+          <button
+            className="btn mrg-b20 w120 center"
+            onClick={() => setForm({})}
+          >
+            Nouvelle action
+          </button>
 
           <table className="tableau-style">
             <thead>
               <tr>
-                <th>Nom de l'action ok</th>
-                <th>Média ok</th>
-                <th>Mots clés ok</th>
+                <th>Nom de l'action</th>
+                <th>Email formateur</th>
+                <th>Média</th>
+                <th>Mots clés</th>
                 <th>Url Cible</th>
-                <th>Nbs d'envois ok</th>
+                <th>Nbs d'envois</th>
                 <th>Clic</th>
                 <th>Url de tracking</th>
                 <th>Compte créés</th>
@@ -142,10 +146,11 @@ const Actions = () => {
               {actions.map((a) => (
                 <tr key={a.id}>
                   <td>{a.title}</td>
+                  <td>{a.emailFormateur}</td>
                   <td> {a.media}</td>
                   <td> {a.tags}</td>
                   <td>
-                    <a href="{target_url}">{a.target_url}</a>
+                    <a href={a.target_url} target="_blank" rel="noopener noreferrer">{a.target_url}</a>
                   </td>
                   <td>{a.shipments}</td>
                   <td>{a.clicks}</td>
@@ -155,8 +160,7 @@ const Actions = () => {
                   <td>{a.value}</td>
                   <td>
                     {/* Les données qu'il y a dans setForm(a) correspondent à l'action en cours. */}
-                    <button 
-                    className="btn mrg-5" onClick={() => setForm(a)}>
+                    <button className="btn mrg-5" onClick={() => setForm(a)}>
                       <img src={pen} alt="modification" />
                     </button>
                     <button

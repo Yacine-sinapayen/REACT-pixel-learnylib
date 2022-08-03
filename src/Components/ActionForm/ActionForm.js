@@ -23,19 +23,19 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
     }
 
     // Que ce soit dans le cas d'un POST ou PUT je veux récupérer les valeurs saisies/modifiées par mon utilisateur du coup je vais maper dessus et stock les valeurs dans un tableau.
-    ["title", "media", "tags", "target_url", "shipments"].map((k) => {
-      newAction[k] = e.target[k].value;
-      return true;
-    });
+    ["title","emailFormateur", "media", "tags", "target_url", "shipments"].map(
+      (k) => {
+        newAction[k] = e.target[k].value;
+        return true;
+      }
+    );
     // onSubmit est une fonction que je récupère via mes props depuis le composant parent Actions
     return onSubmit(newAction);
   };
 
   return (
     <div className="fcontainer p-5 h90vh flex center-content mrg-auto w75p gap40">
-      <form 
-      className="flex gap10 center column " 
-      onSubmit={handleSubmit}>
+      <form className="flex gap10 center column " onSubmit={handleSubmit}>
         <h1 className="dark">Créer une nouvelle action marketing</h1>
         <input
           type="text"
@@ -44,6 +44,15 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
           placeholder="Nom de l'action"
           name="title"
           defaultValue={action.title}
+        />
+        {/* insertion new champ email */}
+        <input
+          type="email"
+          maxLength="200"
+          required={false}
+          placeholder="Adresse email du compte LearnyLib"
+          name="emailFormateur"
+          defaultValue={action.emailFormateur}
         />
         <input
           type="text"
@@ -68,6 +77,7 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
           name="target_url"
           defaultValue={action.target_url}
         />
+
         <input
           type="number"
           min="0"
@@ -84,7 +94,9 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
             {add ? "Ajouter" : "Modifier"}
           </button>
           {/* onClose est une fonction que je récupère via mes props depuis le composant parent Actions */}
-          <button className="btn w120 center" onClick={() => onClose()}>Fermer</button>
+          <button className="btn w120 center" onClick={() => onClose()}>
+            Fermer
+          </button>
         </div>
       </form>
     </div>
