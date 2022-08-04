@@ -11,6 +11,7 @@ import moment from "moment";
 const Actions = () => {
   const [actions, setActions] = useState([]);
 
+  console.log([...actions])
   // form correspond aux données envoyées par le formulaire, 3 cas :
   // Si form = false alors le formulaire n'est pas visible
   // Si form = {} alors nous sommes dans un POST
@@ -28,6 +29,8 @@ const Actions = () => {
   // GET
   useEffect(() => {
     // Récupération de toutes les actions
+    // serveur test
+    // fetch("http://localhost:3006/actions")
     fetch("https://squedio.com/marketing/api/v1/actions")
       .then((res) => res.json())
       .then((data) => setActions(data))
@@ -44,7 +47,7 @@ const Actions = () => {
     const add = Object.keys(form).length === 0;
 
     // J'intencie une const qui récupère "l'ancienne plus rescente" version de mon tableau d'actions
-    const oldActions = [...actions]
+    const oldActions = [...actions];
 
     // copie du state
     let copy = [...actions];
@@ -67,7 +70,7 @@ const Actions = () => {
         // Et j'affiche un msg d'erreur
         displayCreateError();
       });
-    }
+    };
 
     // J'envoie dans la "copy" de mon tableau d'action la newAction
     copy.push(newAction);
@@ -130,7 +133,6 @@ const Actions = () => {
             <thead>
               <tr>
                 <th>Nom de l'action</th>
-                <th>Email formateur</th>
                 <th>Date de création</th>
                 <th>Média</th>
                 <th>Mots clés</th>
@@ -152,9 +154,8 @@ const Actions = () => {
                 .map((i) => (
                   <tr key={i.id}>
                     <td>{i.title}</td>
-                    <td>{i.emailFormateur}</td>
                     <td>
-                      <p>{moment(i.created_at).format("YYYY-MM-DD")}</p>
+                      <p>{moment(i.created_at).format("DD/MM/YYYY")}</p>
                     </td>
                     <td> {i.media}</td>
                     <td> {i.tags}</td>

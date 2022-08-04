@@ -23,7 +23,7 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
     }
 
     // Que ce soit dans le cas d'un POST ou PUT je veux récupérer les valeurs saisies/modifiées par mon utilisateur du coup je vais maper dessus et stock les valeurs dans un tableau.
-    ["title","emailFormateur", "media", "tags", "target_url", "shipments"].map(
+    ["title","teacher_email", "media", "tags", "target_url", "shipments"].map(
       (k) => {
         newAction[k] = e.target[k].value;
         return true;
@@ -51,8 +51,8 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
           maxLength="200"
           required={false}
           placeholder="Adresse email du compte LearnyLib"
-          name="emailFormateur"
-          defaultValue={action.emailFormateur}
+          name="teacher_email"
+          defaultValue={action.teacher_email}
         />
         <input
           type="text"
