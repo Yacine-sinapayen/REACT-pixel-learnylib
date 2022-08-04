@@ -14,4 +14,6 @@ Info : Ce projet contient des données relatif à la stratégie marketing de lea
 ## L'authentification est gérée via le service firebase.
 
 
-className="container p-5 h90vh flex"
+## Structure de l'application 
+
+Adresse fake api server pour tester mes données : http://localhost:3006/actions
