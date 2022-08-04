@@ -11,12 +11,20 @@ import moment from "moment";
 const Actions = () => {
   const [actions, setActions] = useState([]);
 
-  console.log([...actions])
   // form correspond aux données envoyées par le formulaire, 3 cas :
   // Si form = false alors le formulaire n'est pas visible
   // Si form = {} alors nous sommes dans un POST
   // Si form = {objet plein} alors nous sommes dans un PUT
   const [form, setForm] = useState(false);
+
+  // Sate de la searchBar
+  const [searchBar, setSearchBar] = useState("");
+  // Fonction de recherche
+  const handleSearch = (e) => {
+    let value = e.target.value;
+    setSearchBar(value);
+  };
+
 
   // Gestion des erreurs de l'API avec Taostify
   const displayCreateError = () =>
@@ -31,7 +39,7 @@ const Actions = () => {
     // Récupération de toutes les actions
     // serveur test
     // fetch("http://localhost:3006/actions")
-    fetch("https://squedio.com/marketing/api/v1/actions")
+      fetch("https://squedio.com/marketing/api/v1/actions")
       .then((res) => res.json())
       .then((data) => setActions(data))
       .catch((err) => {
@@ -70,7 +78,7 @@ const Actions = () => {
         // Et j'affiche un msg d'erreur
         displayCreateError();
       });
-    };
+    }
 
     // J'envoie dans la "copy" de mon tableau d'action la newAction
     copy.push(newAction);
@@ -128,6 +136,14 @@ const Actions = () => {
           >
             Nouvelle action
           </button>
+          <input
+            type="searchbar"
+            maxLength="200"
+            required={true}
+            placeholder="Recherche"
+            name="searchbar"
+            onChange={handleSearch}
+          />
 
           <table className="tableau-style">
             <thead>
@@ -148,6 +164,9 @@ const Actions = () => {
             </thead>
             <tbody>
               {actions
+                .filter((i) => {
+                  return i.title.toLowerCase().includes(searchBar.toLowerCase());
+                })
                 .sort(function (a, b) {
                   return new Date(b.created_at) - new Date(a.created_at);
                 })
