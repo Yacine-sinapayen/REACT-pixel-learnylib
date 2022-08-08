@@ -1,10 +1,7 @@
-import React, { useRef, useState, useContext } from "react";
-import { UserContext } from "../../context/userContext.js";
-import { useNavigate } from "react-router-dom";
+import React, { useRef, useState } from "react";import { useNavigate } from "react-router-dom";
 
 export default function SignInForm() {
   // J'importe ma méthode signIn depuis mon userContext.js
-  const { signIn } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -31,11 +28,6 @@ export default function SignInForm() {
 
     // Inscription côté server Firebase. 
     try {
-      const cred = await signIn(
-        inputs.current[0].value,
-        inputs.current[1].value
-      );
-
       setValidation("");
       // console.log(cred); => me renvoie les valeurs de mes inputs
       // Une fois connecté je veux accéder à ma route privée
@@ -45,8 +37,6 @@ export default function SignInForm() {
         setValidation("Oops email et/ou mot de passe incorrect")
     }
   };
-
-  // 
 
   return (
     <div className="container p-5 h90vh flex center-content mrg-auto w75p gap40">
