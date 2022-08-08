@@ -142,7 +142,7 @@ const Actions = () => {
           <h2 className="dark">Listes des actions marketing</h2>
           {/* L'objet vide dans setForm récupérera les données modifiées ou nouvelles qui seront entrées dans le formulaire */}
           <button
-            className="btn mrg-b20 w120 center"
+            className="btn mrg-b10 w120 center"
             onClick={() => setForm({})}
           >
             Nouvelle action
