@@ -17,13 +17,24 @@ const Actions = () => {
   // Si form = {objet plein} alors nous sommes dans un PUT
   const [form, setForm] = useState(false);
 
-  // Sate de la searchBar
+  // State de la searchBarTitle
   const [searchBar, setSearchBar] = useState("");
   // Fonction de recherche
-  const handleSearch = (e) => {
-    let value = e.target.value;
+  const handleSearchByTitle = (t) => {
+    let value = t.target.value;
     setSearchBar(value);
   };
+  // const handleSearchByMedia = (t) => {
+  //   let value = t.target.value;
+  //   setSearchBar(value);
+  // };
+  // // State de la searchBarMedia
+  // const [searchBarMedia, setSearchBarMedia] = useState("");
+  // // Fonction de recherche
+  // const handleSearchByMedia = (e) => {
+  //   let value = e.target.value;
+  //   setSearchBarMedia(value);
+  // };
 
 
   // Gestion des erreurs de l'API avec Taostify
@@ -38,8 +49,8 @@ const Actions = () => {
   useEffect(() => {
     // Récupération de toutes les actions
     // serveur test
-    // fetch("http://localhost:3006/actions")
-      fetch("https://squedio.com/marketing/api/v1/actions")
+    fetch("http://localhost:3006/actions")
+      // fetch("https://squedio.com/marketing/api/v1/actions")
       .then((res) => res.json())
       .then((data) => setActions(data))
       .catch((err) => {
@@ -136,15 +147,17 @@ const Actions = () => {
           >
             Nouvelle action
           </button>
+          {/* Inputs de recherche */}
           <input
-            type="searchbar"
+            type="search"
             maxLength="200"
             required={true}
-            placeholder="Recherche"
+            placeholder="Nom de l'action ou média"
             name="searchbar"
-            onChange={handleSearch}
+            onChange={handleSearchByTitle}
+            className="mrg-r10"
+            style={{"width" : "180px"}}
           />
-
           <table className="tableau-style">
             <thead>
               <tr>
@@ -165,7 +178,9 @@ const Actions = () => {
             <tbody>
               {actions
                 .filter((i) => {
-                  return i.title.toLowerCase().includes(searchBar.toLowerCase());
+                  return i.title.toLowerCase().includes(searchBar.toLowerCase()) 
+                  || i.media.toLowerCase().includes(searchBar.toLowerCase()); 
+                  /* || moment(i.created_at).format("DD/MM/YYYY").includes(searchBarDate); */
                 })
                 .sort(function (a, b) {
                   return new Date(b.created_at) - new Date(a.created_at);
