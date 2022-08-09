@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CreateAction, EditAction, DeleteAction } from "../../../api/ActionApi";
+import { CreateAction, EditAction, DeleteAction, GetActions } from "../../../api/ActionApi";
 import "./PrivateAction.scss";
 import trash from "../../../Assets/trash.png";
 import pen from "../../../Assets/pen.png";
@@ -17,14 +17,17 @@ const Actions = () => {
   // Si form = {objet plein} alors nous sommes dans un PUT
   const [form, setForm] = useState(false);
 
-  // State de la searchBarTitle
-  const [searchBar, setSearchBar] = useState("");
-  // Fonction de recherche
-  const handleSearchByTitle = (e) => {
-    let value = e.target.value;
-    setSearchBar(value);
-  };
+  // J'ai un seul state qui gere tous les filtre
+  // Pour pouvoir gérer la fonction search.title.toLowerCase im faut définir la prop title comme étant un string car la fonction toLowerCase ne s'applique que sur des objet de type string
+  const [search, setSearch] = useState({ title: "" });
 
+  // Fonction de recherche
+  const handleSearch = (e) => {
+    let prop = e.currentTarget.name;
+    let copy = { ...search };
+    copy[prop] = e.currentTarget.value;
+    setSearch(copy);
+  };
 
   // Gestion des erreurs de l'API avec Taostify
   const displayCreateError = () =>
@@ -33,18 +36,14 @@ const Actions = () => {
     toast.error("Erreur lors de la modification de l'action");
   const displayDeleteError = () =>
     toast.error("Erreur lors de la suppression de l'action");
+    const displayGetError = () => 
+    toast.error("Erreur lors du chargement des actions");
 
   // GET
   useEffect(() => {
-    // Récupération de toutes les actions
-    // serveur test
-    fetch("http://localhost:3006/actions")
-      // fetch("https://squedio.com/marketing/api/v1/actions")
-      .then((res) => res.json())
-      .then((data) => setActions(data))
-      .catch((err) => {
-        console.log(err);
-      });
+    GetActions()
+      .then(data => setActions(data))
+      .catch(err => displayGetError())
   }, []);
 
   //PUT and POST
@@ -115,10 +114,24 @@ const Actions = () => {
     return false;
   };
 
+  // Cette fonction vérifie que l'item correspond à la recherche.
+  // Si dans notre searchDate il y a la prop startDate alors on compare avec la date de créa de l'action sinon on renvoie true
+  const match = (i) => {
+    return (
+      (i.title.toLowerCase().includes(search.title.toLowerCase()) ||
+        i.media.toLowerCase().includes(search.title.toLowerCase())) &&
+      (search.startDate
+        ? moment(search.startDate).valueOf() < moment(i.created_at).valueOf()
+        : true) &&
+      (search.endDate
+        ? moment(search.endDate).valueOf() > moment(i.created_at).valueOf()
+        : true)
+    );
+  };
   return (
     <div className="container h90vh">
       <ToastContainer />
-      {/* Si form = {} || {objet plain} alors je l'affiche sinon j'affiche le composant Actions */}
+      {/* Si form = {} || {objet plein} alors je l'affiche sinon j'affiche le composant Actions */}
       {form ? (
         <ActionForm
           // action est = au contenu du state form
@@ -142,10 +155,25 @@ const Actions = () => {
             maxLength="200"
             required={true}
             placeholder="Nom de l'action ou média"
-            name="searchbar"
-            onChange={handleSearchByTitle}
+            name="title"
+            onChange={(e) => handleSearch(e)}
             className="mrg-r10"
-            style={{"width" : "180px"}}
+          />
+          <input
+            type="date"
+            maxLength="200"
+            required={true}
+            name="startDate"
+            className="mrg-r10"
+            onChange={(e) => handleSearch(e)}
+          />
+          <input
+            type="date"
+            maxLength="200"
+            required={true}
+            name="endDate"
+            className="mrg-r10"
+            onChange={(e) => handleSearch(e)}
           />
           <table className="tableau-style">
             <thead>
@@ -166,13 +194,13 @@ const Actions = () => {
             </thead>
             <tbody>
               {actions
-                .filter((i) => {
-                  return i.title.toLowerCase().includes(searchBar.toLowerCase()) 
-                  || i.media.toLowerCase().includes(searchBar.toLowerCase()); 
-                })
-                .sort(function (a, b) {
-                  return new Date(b.created_at) - new Date(a.created_at);
-                })
+                .filter((i) => match(i))
+                /* l'objet "new Date" interprete mal les dates sql sur certaine version de safari */
+                .sort(
+                  (a, b) =>
+                    moment(b.created_at).valueOf() -
+                    moment(a.created_at).valueOf()
+                )
                 .map((i) => (
                   <tr key={i.id}>
                     <td>{i.title}</td>

@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home/Home";
-import Actions from "./pages/Home/PrivateActions/PrivateActions";
 import NavBar from "./components/Navbar/Navbar";
+import Home from "./pages/Home/Home";
+import Login from "./pages/Authentication/Login";
 import "./scss/index.scss";
 
 const App = () => {
@@ -10,11 +10,11 @@ const App = () => {
     <>
       <NavBar />
       <Routes>
-        {/* C'est depuis ma route parent Home que je check la connexion */}
-        <Route path="/marketing" element={<Home />}>
-          {/* Si la route parent valide la connexion alors j'affiche cette route */}
-          <Route path="/marketing/private-actions" element={<Actions />} />
-        </Route>
+        {/* Login n'est qu'une page de transition elle ne s'affiche que le temps de la validation du token de connexion du 'user'. */}
+        <Route path="/marketing/auth/:key" element={<Login />} />
+
+        {/* J'ai accès à mes actions depuis le composant Home. */}
+        <Route path="/marketing" element={<Home />} />
       </Routes>
     </>
   );
