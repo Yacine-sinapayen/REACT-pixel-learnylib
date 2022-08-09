@@ -1,5 +1,5 @@
 {
-  "name": "interface-marketing",
+  "name": "y",
   "version": "0.1.0",
   "homepage": "https://app.learnylib.fr/marketing/",
   "private": true,
@@ -42,5 +42,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "description": "L'objectif de cette application est de mettre à disposition du pôle marketing une interface afin de créer et de suivre des actions.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yacine-sinapayen/pixel-learnylib.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yacine-sinapayen/pixel-learnylib/issues"
   }
 }

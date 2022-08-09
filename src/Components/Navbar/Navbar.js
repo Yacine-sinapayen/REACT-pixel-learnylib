@@ -1,10 +1,9 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Logo from "../../Assets/Logo.png";
 
 export default function NavBar() {
-  const navigate = useNavigate();
-
+  // const navigate = useNavigate();
 
   return (
     <nav className="top-0 h50 border-bottom-light">

@@ -20,21 +20,10 @@ const Actions = () => {
   // State de la searchBarTitle
   const [searchBar, setSearchBar] = useState("");
   // Fonction de recherche
-  const handleSearchByTitle = (t) => {
-    let value = t.target.value;
+  const handleSearchByTitle = (e) => {
+    let value = e.target.value;
     setSearchBar(value);
   };
-  // const handleSearchByMedia = (t) => {
-  //   let value = t.target.value;
-  //   setSearchBar(value);
-  // };
-  // // State de la searchBarMedia
-  // const [searchBarMedia, setSearchBarMedia] = useState("");
-  // // Fonction de recherche
-  // const handleSearchByMedia = (e) => {
-  //   let value = e.target.value;
-  //   setSearchBarMedia(value);
-  // };
 
 
   // Gestion des erreurs de l'API avec Taostify
@@ -180,7 +169,6 @@ const Actions = () => {
                 .filter((i) => {
                   return i.title.toLowerCase().includes(searchBar.toLowerCase()) 
                   || i.media.toLowerCase().includes(searchBar.toLowerCase()); 
-                  /* || moment(i.created_at).format("DD/MM/YYYY").includes(searchBarDate); */
                 })
                 .sort(function (a, b) {
                   return new Date(b.created_at) - new Date(a.created_at);
