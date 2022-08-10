@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { CreateAction, EditAction, DeleteAction, GetActions } from "../../../api/ActionApi";
+import {
+  CreateAction,
+  EditAction,
+  DeleteAction,
+  GetActions,
+} from "../../../api/ActionApi";
 import "./PrivateAction.scss";
 import trash from "../../../Assets/trash.png";
 import pen from "../../../Assets/pen.png";
@@ -36,14 +41,14 @@ const Actions = () => {
     toast.error("Erreur lors de la modification de l'action");
   const displayDeleteError = () =>
     toast.error("Erreur lors de la suppression de l'action");
-    const displayGetError = () => 
+  const displayGetError = () =>
     toast.error("Erreur lors du chargement des actions");
 
   // GET
   useEffect(() => {
     GetActions()
-      .then(data => setActions(data))
-      .catch(err => displayGetError())
+      .then((data) => setActions(data))
+      .catch((err) => displayGetError());
   }, []);
 
   //PUT and POST
@@ -142,39 +147,38 @@ const Actions = () => {
       ) : (
         <>
           <h2 className="dark">Listes des actions marketing</h2>
-          {/* L'objet vide dans setForm récupérera les données modifiées ou nouvelles qui seront entrées dans le formulaire */}
-          <button
-            className="btn mrg-b10 w120 center"
-            onClick={() => setForm({})}
-          >
-            Nouvelle action
-          </button>
-          {/* Inputs de recherche */}
-          <input
-            type="search"
-            maxLength="200"
-            required={true}
-            placeholder="Nom de l'action ou média"
-            name="title"
-            onChange={(e) => handleSearch(e)}
-            className="mrg-r10"
-          />
-          <input
-            type="date"
-            maxLength="200"
-            required={true}
-            name="startDate"
-            className="mrg-r10"
-            onChange={(e) => handleSearch(e)}
-          />
-          <input
-            type="date"
-            maxLength="200"
-            required={true}
-            name="endDate"
-            className="mrg-r10"
-            onChange={(e) => handleSearch(e)}
-          />
+          <div className="flex gap10 bottom wrap">
+            {/* L'objet vide dans setForm récupérera les données modifiées ou nouvelles qui seront entrées dans le formulaire */}
+            <button
+              className="btn w120"
+              onClick={() => setForm({})}
+            >
+              Nouvelle action
+            </button>
+            {/* Inputs de recherche */}
+            <input
+              type="search"
+              maxLength="200"
+              required={true}
+              placeholder="Nom de l'action ou média"
+              name="title"
+              onChange={(e) => handleSearch(e)}
+            />
+            <input
+              type="date"
+              maxLength="200"
+              required={true}
+              name="startDate"
+              onChange={(e) => handleSearch(e)}
+            />
+            <input
+              type="date"
+              maxLength="200"
+              required={true}
+              name="endDate"
+              onChange={(e) => handleSearch(e)}
+            />
+          </div>
           <table className="tableau-style">
             <thead>
               <tr>

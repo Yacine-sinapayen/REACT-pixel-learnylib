@@ -1,6 +1,6 @@
 // url serveur test : 
-// const baseUrl = "http://localhost:3006/actions";
-const baseUrl = "https://squedio.com/marketing/api/v1";
+const baseUrl = "http://localhost:3006";
+// const baseUrl = "https://squedio.com/marketing/api/v1";
 
 // Gestion de l'authentification
 export const Authenticate = async (body) => {
@@ -33,7 +33,6 @@ export const GetActions = async () => {
 export const CreateAction = async (body) => {
   return await fetch(`${baseUrl}/actions`, {
     method: "POST",
-    // Le header n'est necessaire que pour la version en développement sur le server test "http://localhost:3006/actions". Sur le server en prod il faut commenter cette partie.
     headers: {
       "Content-Type": "application/json",
        "Authorization" : "Bearer " + window.localStorage.getItem("marketing_token")
@@ -57,7 +56,6 @@ export const DeleteAction = async (id) => {
 export const EditAction = async (body) => {
   return await fetch(`${baseUrl}/actions/${body.id}`, {
     method: "PUT",
-    // Le header n'est necessaire que pour la version en développement sur le server test "http://localhost:3006/actions". Sur le server en prod il faut commenter cette partie.
     headers: {
       "Content-Type": "application/json",
        "Authorization" : "Bearer " + window.localStorage.getItem("marketing_token")

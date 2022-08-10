@@ -23,7 +23,7 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
     }
 
     // Que ce soit dans le cas d'un POST ou PUT je veux récupérer les valeurs saisies/modifiées par mon utilisateur du coup je vais maper dessus et stock les valeurs dans un tableau.
-    ["title","teacher_email", "media", "tags", "target_url", "shipments"].map(
+    ["title", "teacher_email", "media", "tags", "target_url", "shipments"].map(
       (k) => {
         newAction[k] = e.target[k].value;
         return true;
@@ -37,6 +37,17 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
     <div className="fcontainer p-5 h90vh flex center-content mrg-auto w75p gap40">
       <form className="flex gap10 center column " onSubmit={handleSubmit}>
         <h1 className="dark">Créer une nouvelle action marketing</h1>
+        <select required={true} name="media" defaultValue={action.media}>
+          <option value="choix-media">--Choisissez un média--</option>
+          <option className="red-bg" value="courier">Courier</option>
+          <option value="email">Email</option>
+          <option value="Facebook">Facebook</option>
+          <option value="google">Google</option>
+          <option value="instagram">Instagram</option>
+          <option value="tel">Téléphone</option>
+          <option value="tiktok">Tiktok</option>
+          <option value="youtube">Youtube</option>
+        </select>
         <input
           type="text"
           maxLength="200"
@@ -50,17 +61,9 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
           type="email"
           maxLength="200"
           required={false}
-          placeholder="Adresse email du compte LearnyLib"
+          placeholder="Adresse email du formateur (compte LearnyLib)"
           name="teacher_email"
           defaultValue={action.teacher_email}
-        />
-        <input
-          type="text"
-          maxLength="200"
-          required={true}
-          placeholder="Média"
-          name="media"
-          defaultValue={action.media}
         />
         <input
           type="text"
