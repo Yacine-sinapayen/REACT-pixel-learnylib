@@ -13,11 +13,8 @@ export default function NavBar() {
           <span className="italic dark-light">Marketing</span>
         </div>
         <div className="flex w40p end gap10">
-          <button
-            className="btn-nav dark-light border-none font-07 pointer"
-          >
-            Déconnexion
-          </button>
+        <a className="btn-nav border-none font-07 pointer" href="https://formations.learnylib.com" target="_blank" rel="noopener noreferrer">Déconnexion</a>
+  
         </div>
       </div>
     </nav>

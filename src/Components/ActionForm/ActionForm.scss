@@ -1,20 +1,19 @@
-input {
-    margin-bottom: 10px;
-    height: 34px;
-    padding: 0px 6px;
-    border-radius: 8px;
-    background-color: #fafafa;
-    border: 1px solid #dcdcdc;
-  }
+input,
+select {
+  margin-bottom: 10px;
+  height: 35px;
+  padding: 0px 6px;
+  border-radius: 8px;
+  background-color: #fafafa;
+  border: 1px solid #dcdcdc;
 
-  input:focus {
+  &:focus {
     outline: none !important;
     border: 1px solid #719ece;
     box-shadow: 0 0 5px #719ece;
   }
-
-  ::placeholder{
-    color: rgba(0,0,0,.3);
-  }
-
+}
+::placeholder {
+  color: rgba(0, 0, 0, 0.3);
+}
 
