@@ -39,7 +39,7 @@ const ActionForm = ({ action, onClose, onSubmit }) => {
         <h1 className="dark">Créer une nouvelle action marketing</h1>
         <select required={true} name="media" defaultValue={action.media}>
           <option value="choix-media">--Choisissez un média--</option>
-          <option className="red-bg" value="courier">Courier</option>
+          <option value="courier">Courier</option>
           <option value="email">Email</option>
           <option value="Facebook">Facebook</option>
           <option value="google">Google</option>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   CreateAction,
   EditAction,
@@ -23,7 +23,7 @@ const Actions = () => {
   const [form, setForm] = useState(false);
 
   // C'est la valeur par defaut de mes inputs de filtre
-  const defaultSearch = { title: "", startDate:"", endDate:"" };
+  const defaultSearch = { title: "", startDate: "", endDate: "" };
   // J'ai un seul state qui gere tous les filtre
   // Pour pouvoir gérer la fonction search.title.toLowerCase im faut définir la prop title comme étant un string car la fonction toLowerCase ne s'applique que sur des objet de type string
   const [search, setSearch] = useState(defaultSearch);
@@ -36,7 +36,7 @@ const Actions = () => {
     setSearch(copy);
   };
 
-  // Gestion des erreurs de l'API avec Taostify
+  /* ------ Gestion des erreurs de l'API avec la lib Taostify ------*/
   const displayCreateError = () =>
     toast.error("Erreur lors de la création de l'action");
   const diplayEditError = () =>
@@ -46,16 +46,21 @@ const Actions = () => {
   const displayGetError = () =>
     toast.error("Erreur lors du chargement des actions");
 
+  /* ------ Appels à l'API ------*/
   // GET
   useEffect(() => {
-    GetActions()
-      .then((data) => setActions(data))
-      .catch((err) => displayGetError());
+    GetActions().then((data) => {
+        if(!data || data.status === 401){
+          displayGetError();
+        }else {
+        setActions(data)
+      }
+    });
   }, []);
 
   //PUT and POST
   const handleSubmit = (newAction) => {
-    // Même principe qu'avec action côté formulaire, j'initie add à un objet vide
+    // Même principe qu'avec action côté formulaire, j'initie add = objet vide
     // Si add = {} alors POST
     // Si add = {objet plein} alors PUT
     const add = Object.keys(form).length === 0;
@@ -72,7 +77,7 @@ const Actions = () => {
 
       // Je met à jour mon api avec l'action modifiée
       EditAction(newAction).catch((err) => {
-        // Gestion de l'erreur
+        // J'affiche un msg d'erreur
         diplayEditError();
       });
     } else {
@@ -81,7 +86,7 @@ const Actions = () => {
         //  En cas d'erreur je renvoie l'ancienne version du tableau d'action
         setActions(oldActions);
 
-        // Et j'affiche un msg d'erreur
+        // J'affiche un msg d'erreur
         displayCreateError();
       });
     }
@@ -121,6 +126,8 @@ const Actions = () => {
     return false;
   };
 
+  /* ------ Mise en place des filtres de recherche ------*/
+
   // Cette fonction vérifie que l'item correspond à la recherche.
   // Si dans notre searchDate il y a la prop startDate alors on compare avec la date de créa de l'action sinon on renvoie true
   const match = (i) => {
@@ -135,10 +142,13 @@ const Actions = () => {
         : true)
     );
   };
+
+  // remet à zéro nos inputs de filtre
   const inputReset = (e) => {
     e.preventDefault();
     setSearch(defaultSearch);
   };
+
   return (
     <div className="container h90vh">
       <ToastContainer />
@@ -184,7 +194,9 @@ const Actions = () => {
               onChange={(e) => handleSearch(e)}
               value={search.endDate}
             />
-            <button onClick={(e) => inputReset(e)}>reset</button>
+            <button className="btn" onClick={(e) => inputReset(e)}>
+              réinitialiser
+            </button>
           </div>
           <table className="tableau-style">
             <thead>

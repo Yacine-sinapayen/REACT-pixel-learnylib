@@ -1,6 +1,6 @@
 // url serveur test : 
-const baseUrl = "http://localhost:3006";
-// const baseUrl = "https://squedio.com/marketing/api/v1";
+// const baseUrl = "http://localhost:3006";
+const baseUrl = "https://squedio.com/marketing/api/v1";
 
 // Gestion de l'authentification
 export const Authenticate = async (body) => {
@@ -16,7 +16,7 @@ export const Authenticate = async (body) => {
 };
 
 // GET
-export const GetActions = async () => {
+export const GetActions = async (data) => {
   const response = await fetch(`${baseUrl}/actions`, {
     method: "GET",
     headers: {
@@ -26,7 +26,7 @@ export const GetActions = async () => {
     },
   });
   // Si j'ai une erreur je renvoie dans tout les cas un tableau vide
-  return response.status === 200 ? response.json() : [];
+  return response.status === 200 ? response.json() : false ;
 }
 
 // POST
