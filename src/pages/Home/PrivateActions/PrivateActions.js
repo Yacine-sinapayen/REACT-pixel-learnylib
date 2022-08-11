@@ -22,9 +22,11 @@ const Actions = () => {
   // Si form = {objet plein} alors nous sommes dans un PUT
   const [form, setForm] = useState(false);
 
+  // C'est la valeur par defaut de mes inputs de filtre
+  const defaultSearch = { title: "", startDate:"", endDate:"" };
   // J'ai un seul state qui gere tous les filtre
   // Pour pouvoir gérer la fonction search.title.toLowerCase im faut définir la prop title comme étant un string car la fonction toLowerCase ne s'applique que sur des objet de type string
-  const [search, setSearch] = useState({ title: "" });
+  const [search, setSearch] = useState(defaultSearch);
 
   // Fonction de recherche
   const handleSearch = (e) => {
@@ -133,6 +135,10 @@ const Actions = () => {
         : true)
     );
   };
+  const inputReset = (e) => {
+    e.preventDefault();
+    setSearch(defaultSearch);
+  };
   return (
     <div className="container h90vh">
       <ToastContainer />
@@ -149,10 +155,7 @@ const Actions = () => {
           <h2 className="dark">Listes des actions marketing</h2>
           <div className="flex gap10 bottom wrap">
             {/* L'objet vide dans setForm récupérera les données modifiées ou nouvelles qui seront entrées dans le formulaire */}
-            <button
-              className="btn w120"
-              onClick={() => setForm({})}
-            >
+            <button className="btn w120" onClick={() => setForm({})}>
               Nouvelle action
             </button>
             {/* Inputs de recherche */}
@@ -163,6 +166,7 @@ const Actions = () => {
               placeholder="Nom de l'action ou média"
               name="title"
               onChange={(e) => handleSearch(e)}
+              value={search.title}
             />
             <input
               type="date"
@@ -170,6 +174,7 @@ const Actions = () => {
               required={true}
               name="startDate"
               onChange={(e) => handleSearch(e)}
+              value={search.startDate}
             />
             <input
               type="date"
@@ -177,7 +182,9 @@ const Actions = () => {
               required={true}
               name="endDate"
               onChange={(e) => handleSearch(e)}
+              value={search.endDate}
             />
+            <button onClick={(e) => inputReset(e)}>reset</button>
           </div>
           <table className="tableau-style">
             <thead>
